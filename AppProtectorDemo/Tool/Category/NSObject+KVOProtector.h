@@ -12,6 +12,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (KVOProtector)
 
+- (void)app_addObserver:(NSObject *)observer
+             forKeyPath:(NSString *)keyPath
+                options:(NSKeyValueObservingOptions)options
+                context:(void *)context;
+
+- (void)app_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
+
+- (void)app_removeObserver:(NSObject *)observer
+                forKeyPath:(NSString *)keyPath
+                   context:(nullable void *)context;
+
+- (void)app_dealloc;
+
 @end
 
 NS_ASSUME_NONNULL_END

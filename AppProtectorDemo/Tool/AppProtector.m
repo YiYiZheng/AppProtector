@@ -13,6 +13,10 @@
 #import "AppContainerProtector.h"
 #import "AppProtectorErrorView.h"
 
+#import "NSObject+unrecognizedSelector.h"
+#import "NSObject+KVOProtector.h"
+#import "NSObject+TimerProtector.h"
+
 #pragma mark - AppProtector
 
 @interface AppProtector ()
@@ -49,7 +53,7 @@
 - (void)openAppProtection:(AppProtection)protection
              errorHandler:(APPErrorHandler)errorHandler {
     self.appErrorHandler = errorHandler;
-#warning 如果已经有方法交换了，需要避免重复交换，可以算一个难点吧，因为有其他库
+#warning How to check whether is already exchange?
     if (protection == AppProtectionAll) {
 //        NSLog(@"AppProtectionAll");
         protection = AppProtectionUnrecognizedSelector | AppProtectionKVO | AppProtectionTimer | AppProtectionTypeContainers;

@@ -7,8 +7,8 @@
 //
 
 #import "NSObject+unrecognizedSelector.h"
-#import "AppProtector.h"
 #import "AppCommonTool.h"
+#import "AppProtector.h"
 
 @implementation NSObject (unrecognizedSelector)
 
@@ -35,6 +35,5 @@
     (class_getMethodImplementation([NSObject class], @selector(forwardingTargetForSelector:)) != class_getMethodImplementation([self class], @selector(forwardingTargetForSelector:)));
     return overide;
 }
-
 
 @end

@@ -32,14 +32,14 @@
     UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:recognizer];
 
-#warning 临时处理，延迟加到 window 上
+#warning tmp，delay add to window
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [AppKeyWindow addSubview:self];
     });
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
-#warning 拖拽实现原理细究
+#warning figure out pan 
     CGPoint point = [sender translationInView:[sender.view superview]];
 
     CGFloat senderHalfViewWidth = sender.view.frame.size.width / 2;

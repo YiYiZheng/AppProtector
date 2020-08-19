@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (unrecognizedSelector)
 
+- (id)app_swizzle_forwardingTargetForSelector:(SEL)selector;
+
 @end
 
 NS_ASSUME_NONNULL_END

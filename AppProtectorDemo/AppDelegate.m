@@ -7,10 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
-#warning import 太多，需要清理
 #import "AppProtector.h"
-#import "AppCatchError.h"
 
 @interface AppDelegate ()
 
