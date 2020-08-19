@@ -7,10 +7,13 @@
 //
 
 #import "AppContainerProtector.h"
-#import "AppCatchError.h"
-#import "AppCommonTool.h"
+//#import "AppCatchError.h"
 
-APPErrorHandler _Nullable _containerErrorHandler;
+
+#import "AppCommonTool.h"
+#import "AppProtector.h"
+
+//APPErrorHandler _Nullable _containerErrorHandler;
 
 #pragma mark - NSArray
 
@@ -31,11 +34,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
             index++;
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"-[__NSPlaceholderArray initWithObjects:count:]: attempt to insert nil object at index [%d]", i];
-
-            AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-            if (_containerErrorHandler) {
-                _containerErrorHandler(error);
-            }
+            [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
         }
     }
 
@@ -48,10 +47,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
         NSString *type = @"__NSArray0";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
 
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -64,10 +60,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
         NSString *type = @"__NSArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
 
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -80,10 +73,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
         NSString *type = @"NSSingleObjectArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
 
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -96,10 +86,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
         NSString *type = @"__NSArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ objectAtIndexedSubscript:]: index %ld beyond bounds [0 .. %ld]'", type, index, (unsigned long)self.count];
 
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -122,10 +109,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
         NSString *type = @"__NSArrayI";
 
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -136,10 +120,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (id)app_MArrayObjectAtIndexedSubscript:(NSUInteger)idx {
     if (idx >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM objectAtIndexedSubscript:]: index %ld beyond bounds [0 .. %ld]'",(unsigned long)idx,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
@@ -150,10 +131,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_MArrayRemoveObjectAtIndex:(NSUInteger)idx {
     if (idx >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM removeObjectsAtIndex:]: range {%ld, 1} extends beyond bounds [0 .. %ld]",(unsigned long)index,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
     } else {
         [self app_MArrayRemoveObjectAtIndex:idx];
@@ -163,10 +141,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_MArrayRemoveObjectsInRange:(NSRange)range {
     if (range.location + range.length > self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM removeObjectsInRange:]: range {%ld, %ld} extends beyond bounds [0 .. %ld]",(unsigned long)range.location,(unsigned long)range.length,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
     } else {
         [self app_MArrayRemoveObjectsInRange:range];
@@ -176,19 +151,13 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_MArrayInsertObject:(id)anObject atIndex:(NSUInteger)index {
     if (anObject == nil) {
         NSString *errorInfo = @"***  -[__NSArrayM insertObject:atIndex:]: object cannot be nil";
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return;
     }
     if (index > self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM insertObject:atIndex:]: index %ld beyond bounds [0 .. %ld]",(unsigned long)index,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return;
     }
@@ -198,18 +167,12 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_MArrayInsertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes{
     if (indexes.firstIndex > self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[NSMutableArray insertObjects:atIndexes:]: index %ld in index set beyond bounds [0 .. %ld]",(unsigned long)indexes.firstIndex,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return;
     } else if (objects.count != (indexes.count)){
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[NSMutableArray insertObjects:atIndexes:]: count of array (%ld) differs from count of index set (%ld)",(unsigned long)objects.count,(unsigned long)indexes.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
         return;
     }
     [self app_MArrayInsertObjects:objects atIndexes:indexes];
@@ -218,19 +181,13 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject{
     if (anObject == nil) {
         NSString *errorInfo = @"***  -[__NSArrayM replaceObjectAtIndex:withObject:]: object cannot be nil";
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return;
     }
     if (index >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM replaceObjectAtIndex:withObject:]: index %ld beyond bounds [0 .. %ld]",(unsigned long)index,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return;
     }
@@ -240,10 +197,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_replaceObjectsAtIndexes:(NSIndexSet *)indexes withObjects:(NSArray *)objects{
     if (indexes.lastIndex >= self.count||indexes.firstIndex >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM replaceObjectsInRange:withObjects:count:]: range {%ld, %ld} extends beyond bounds [0 .. %ld]",(unsigned long)indexes.firstIndex,(unsigned long)indexes.count,(unsigned long)self.count];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        if (_containerErrorHandler) {
-            _containerErrorHandler(error);
-        }
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
         [self app_replaceObjectsAtIndexes:indexes withObjects:objects];
     }
@@ -273,10 +227,9 @@ APPErrorHandler _Nullable _containerErrorHandler;
             index++;
         } else {
             // key or value is nil
-            NSString *info = [NSString stringWithFormat:@"*** -[__NSPlaceholderDictionary initWithObjects:forKeys:count:]: attempt to insert nil object from objects[%d]",i];
+            NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSPlaceholderDictionary initWithObjects:forKeys:count:]: attempt to insert nil object from objects[%d]",i];
 
-            AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:info];
-            _containerErrorHandler(error);
+            [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
         }
     }
 
@@ -296,8 +249,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_dictionaryMSetObject:(id)anObject forKey:(id<NSCopying>)aKey {
     if (anObject == nil || aKey == nil) {
         NSString * errorInfo = @"*** setObjectForKey: object or key cannot be nil";
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        _containerErrorHandler(error);
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
         [self app_dictionaryMSetObject:anObject forKey:aKey];
     }
@@ -306,8 +258,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 - (void)app_dictionaryMRemoveObjectForKey:(id)aKey {
     if (aKey == nil) {
         NSString * errorInfo = @"*** -[__NSDictionaryM removeObjectForKey:]: key cannot be nil";
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeContainers errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-        _containerErrorHandler(error);
+        [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
         [self app_dictionaryMRemoveObjectForKey:aKey];
     }
@@ -320,9 +271,7 @@ APPErrorHandler _Nullable _containerErrorHandler;
 
 @implementation AppContainerProtector
 
-+ (void)exchangeAllMethodsWithHandler:(void (^)(AppCatchError *error))handler {
-    _containerErrorHandler = handler;
-
++ (void)exchangeAllMethods {
     [self exchangeAllNSArrayMethods];
     [self exchangeAllNSMutableArrayMethods];
     [self exchangeAllNSDictionaryMethods];

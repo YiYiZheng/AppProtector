@@ -10,11 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AppCatchError;
-
 @interface AppContainerProtector : NSObject
 
-+ (void)exchangeAllMethodsWithHandler:(void (^)(AppCatchError *error))handler;
++ (void)exchangeAllMethods;
 
 @end
 

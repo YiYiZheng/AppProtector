@@ -171,7 +171,7 @@
 }
 
 - (void)exchangeMethodForContainers {
-    [AppContainerProtector exchangeAllMethodsWithHandler:self.appErrorHandler];
+    [AppContainerProtector exchangeAllMethods];
 }
 
 
