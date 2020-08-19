@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AppCatchError.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 
  */
 
-@class AppCatchError;
 
 typedef NS_OPTIONS(NSInteger, AppProtection) {
     /*开启全部保护*/
@@ -55,6 +56,13 @@ typedef NS_OPTIONS(NSInteger, AppProtection) {
 - (void)showErrorView;
 
 - (void)hideErrorView;
+
+#warning 以下接口要换一个地方放
+- (void)addErrorWithType:(AppErrorType)errorType
+               callStack:(NSArray *)callStack
+                  detail:(NSString *)detail;
+
+- (void)addErrorInfo:(AppCatchError *)errorInfo;
 
 @end
 

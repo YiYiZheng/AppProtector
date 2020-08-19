@@ -7,6 +7,7 @@
 //
 
 #import <objc/runtime.h>
+#import "AppCatchError.h"
 
 #ifndef AppCommonTool_h
 #define AppCommonTool_h

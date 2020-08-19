@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5337E0A824EAA280005126E2 /* AppProtectorErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */; };
+		5337E0B324ED0FFA005126E2 /* NSObject+unrecognizedSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B224ED0FFA005126E2 /* NSObject+unrecognizedSelector.m */; };
+		5337E0B624ED10DE005126E2 /* NSObject+KVOProtector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B524ED10DE005126E2 /* NSObject+KVOProtector.m */; };
+		5337E0B924ED119B005126E2 /* NSObject+TimerProtector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B824ED119B005126E2 /* NSObject+TimerProtector.m */; };
 		533CB42C24D2AFBC00408594 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42B24D2AFBC00408594 /* AppDelegate.m */; };
 		533CB42F24D2AFBC00408594 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42E24D2AFBC00408594 /* SceneDelegate.m */; };
 		533CB43224D2AFBC00408594 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB43124D2AFBC00408594 /* ViewController.m */; };
@@ -29,6 +32,12 @@
 /* Begin PBXFileReference section */
 		5337E0A624EAA280005126E2 /* AppProtectorErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppProtectorErrorView.h; sourceTree = "<group>"; };
 		5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppProtectorErrorView.m; sourceTree = "<group>"; };
+		5337E0B124ED0FFA005126E2 /* NSObject+unrecognizedSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+unrecognizedSelector.h"; sourceTree = "<group>"; };
+		5337E0B224ED0FFA005126E2 /* NSObject+unrecognizedSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+unrecognizedSelector.m"; sourceTree = "<group>"; };
+		5337E0B424ED10DE005126E2 /* NSObject+KVOProtector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOProtector.h"; sourceTree = "<group>"; };
+		5337E0B524ED10DE005126E2 /* NSObject+KVOProtector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOProtector.m"; sourceTree = "<group>"; };
+		5337E0B724ED119B005126E2 /* NSObject+TimerProtector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TimerProtector.h"; sourceTree = "<group>"; };
+		5337E0B824ED119B005126E2 /* NSObject+TimerProtector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TimerProtector.m"; sourceTree = "<group>"; };
 		533CB42724D2AFBC00408594 /* AppProtectorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppProtectorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		533CB42A24D2AFBC00408594 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		533CB42B24D2AFBC00408594 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -73,6 +82,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5337E0AD24ED0F9E005126E2 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				5337E0B124ED0FFA005126E2 /* NSObject+unrecognizedSelector.h */,
+				5337E0B224ED0FFA005126E2 /* NSObject+unrecognizedSelector.m */,
+				5337E0B424ED10DE005126E2 /* NSObject+KVOProtector.h */,
+				5337E0B524ED10DE005126E2 /* NSObject+KVOProtector.m */,
+				5337E0B724ED119B005126E2 /* NSObject+TimerProtector.h */,
+				5337E0B824ED119B005126E2 /* NSObject+TimerProtector.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		533CB41E24D2AFBC00408594 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +134,7 @@
 		533CB44324D2AFD400408594 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				5337E0AD24ED0F9E005126E2 /* Category */,
 				533CB44424D2B09400408594 /* AppProtector.h */,
 				533CB44524D2B09400408594 /* AppProtector.m */,
 				53CB8E7B24DD57FF005F3FD4 /* AppCatchError.h */,
@@ -261,10 +284,13 @@
 				533CB44624D2B09400408594 /* AppProtector.m in Sources */,
 				53B54B7D24E4EE70002CF971 /* AppContainerProtector.m in Sources */,
 				53B54B7A24E4E7DC002CF971 /* TimerDemoViewController.m in Sources */,
+				5337E0B624ED10DE005126E2 /* NSObject+KVOProtector.m in Sources */,
 				53CB8E9424E3E19E005F3FD4 /* AppTimerProxy.m in Sources */,
 				53CB8E8A24E24775005F3FD4 /* AppKVOPorxy.m in Sources */,
 				53CB8E7A24DD4980005F3FD4 /* UnrecognizedSelectorViewController.m in Sources */,
+				5337E0B924ED119B005126E2 /* NSObject+TimerProtector.m in Sources */,
 				53B54B8124E51CAE002CF971 /* ContainerViewController.m in Sources */,
+				5337E0B324ED0FFA005126E2 /* NSObject+unrecognizedSelector.m in Sources */,
 				533CB42C24D2AFBC00408594 /* AppDelegate.m in Sources */,
 				533CB43D24D2AFBE00408594 /* main.m in Sources */,
 				533CB42F24D2AFBC00408594 /* SceneDelegate.m in Sources */,
