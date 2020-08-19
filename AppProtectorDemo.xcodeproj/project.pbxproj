@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5337E0A824EAA280005126E2 /* AppProtectorErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */; };
 		533CB42C24D2AFBC00408594 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42B24D2AFBC00408594 /* AppDelegate.m */; };
 		533CB42F24D2AFBC00408594 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42E24D2AFBC00408594 /* SceneDelegate.m */; };
 		533CB43224D2AFBC00408594 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB43124D2AFBC00408594 /* ViewController.m */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5337E0A624EAA280005126E2 /* AppProtectorErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppProtectorErrorView.h; sourceTree = "<group>"; };
+		5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppProtectorErrorView.m; sourceTree = "<group>"; };
 		533CB42724D2AFBC00408594 /* AppProtectorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppProtectorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		533CB42A24D2AFBC00408594 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		533CB42B24D2AFBC00408594 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 				53CB8E9524E3E65A005F3FD4 /* AppCommonTool.h */,
 				53B54B7B24E4EE70002CF971 /* AppContainerProtector.h */,
 				53B54B7C24E4EE70002CF971 /* AppContainerProtector.m */,
+				5337E0A624EAA280005126E2 /* AppProtectorErrorView.h */,
+				5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				533CB43224D2AFBC00408594 /* ViewController.m in Sources */,
+				5337E0A824EAA280005126E2 /* AppProtectorErrorView.m in Sources */,
 				53CB8E7D24DD57FF005F3FD4 /* AppCatchError.m in Sources */,
 				53CB8E9124E2D73F005F3FD4 /* KVOViewController.m in Sources */,
 				533CB44624D2B09400408594 /* AppProtector.m in Sources */,

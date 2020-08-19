@@ -29,8 +29,10 @@ typedef NS_ENUM(NSInteger, AppErrorType) {
 
 @property (nonatomic, copy, readonly) NSString *errorName;
 
-
 @property (nonatomic, copy, readonly) NSString *detail;
+
+/// 是否已被查看过，默认是未读
+@property (nonatomic,assign) BOOL isRead;
 
 - (instancetype)initWithType:(AppErrorType)errorType
        errorCallStackSymbols:(NSArray *)errorCallStackSymbols

@@ -13,8 +13,17 @@
 #import "AppCommonTool.h"
 #import "AppTimerProxy.h"
 #import "AppContainerProtector.h"
+#import "AppProtectorErrorView.h"
 
-APPErrorHandler _Nullable _errorHandler;
+@interface AppProtector ()
+
+- (void)addErrorWithType:(AppErrorType)errorType
+               callStack:(NSArray *)callStack
+                  detail:(NSString *)detail;
+
+- (void)addErrorInfo:(AppCatchError *)errorInfo;
+
+@end
 
 #pragma mark - NSObject + unrecognizedSelector
 
@@ -31,10 +40,10 @@ APPErrorHandler _Nullable _errorHandler;
         // 补救
         class_addMethod([AppProtector class], selector, (IMP)DynamicAddMethodIMP, "v@:");
 
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeUnrecognizedSelector errorCallStackSymbols:[NSThread callStackSymbols] detail:@""];
-        _errorHandler(error);
+        [AppProtector.shared addErrorWithType:AppErrorTypeUnrecognizedSelector
+                                    callStack:[NSThread callStackSymbols]
+                                       detail:@""];
 
-        // 缺了弹出一个错误框
 
         return AppProtector.shared;
     }
@@ -94,8 +103,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
             [self app_addObserver:self.appKVOProxy forKeyPath:keyPath options:options context:context];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"重复添加KVO 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
-            AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeKVO errorCallStackSymbols:[NSThread callStackSymbols]  detail:errorInfo];
-            _errorHandler(error);
+            [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
         }
     }
 }
@@ -109,8 +117,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
             [self app_removeObserver:observer forKeyPath:keyPath];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"该 KVO 信息已不存在，请勿重复移除 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
-            AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeKVO errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-            _errorHandler(error);
+            [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
         }
     }
 }
@@ -125,8 +132,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
             [self app_removeObserver:observer forKeyPath:keyPath context:context];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"该 KVO 信息已不存在，请勿重复移除 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
-            AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeKVO errorCallStackSymbols:[NSThread callStackSymbols] detail:errorInfo];
-            _errorHandler(error);
+            [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
         }
     }
 }
@@ -141,10 +147,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
             if (keyPaths.count > 0) {
                 // 报错
                 NSString *errorInfo = [NSString stringWithFormat:@"被观察者-%@ dealloc 时其 KVO 未被移除", NSStringFromClass([self class])];
-                AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeKVO
-                                                     errorCallStackSymbols:[NSThread callStackSymbols]
-                                                                    detail:errorInfo];
-                _errorHandler(error);
+                [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
 
                 // 纠正，取消观察
                 [keyPaths enumerateObjectsUsingBlock:^(NSString *keyPath, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -170,8 +173,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 + (NSTimer *)app_scheduledTimerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo {
     if (yesOrNo && !isSystemClass([aTarget class])) {
         AppTimerProxy *proxy = [AppTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(AppCatchError * _Nonnull error) {
-
-            _errorHandler(error);
+            [AppProtector.shared addErrorInfo:error];
         }];
 
         return [self app_scheduledTimerWithTimeInterval:ti target:proxy selector:NSSelectorFromString(@"triggerTimer:") userInfo:userInfo repeats:yesOrNo];
@@ -183,8 +185,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 + (NSTimer *)app_timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo {
     if (yesOrNo && !isSystemClass([aTarget class])) {
         AppTimerProxy *proxy = [AppTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(AppCatchError * _Nonnull error) {
-
-            _errorHandler(error);
+            [AppProtector.shared addErrorInfo:error];
         }];
 
         return [self app_timerWithTimeInterval:ti target:proxy selector:NSSelectorFromString(@"triggerTimer:") userInfo:userInfo repeats:yesOrNo];
@@ -205,6 +206,11 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 @property (nonatomic, assign) BOOL timerProtectOpen;
 @property (nonatomic, assign) BOOL containersProtectOpen;
 
+@property (nonatomic, strong) NSMutableArray <AppCatchError *> *errorInfos;
+@property (nonatomic, strong) AppProtectorErrorBubbleView *bubbleView;
+
+@property (nonatomic, copy) APPErrorHandler appErrorHandler;
+
 @end
 
 @implementation AppProtector
@@ -213,15 +219,21 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     static dispatch_once_t once;
     static id instance;
     dispatch_once(&once, ^{
-        instance = [self new];
+        instance = [[self alloc] init];
     });
     return instance;
 }
 
+//- (instancetype)init {
+//    if (self = [super init]) {
+//    }
+//    return self;
+//}
+
 - (void)openAppProtection:(AppProtection)protection
              errorHandler:(APPErrorHandler)errorHandler {
-    _errorHandler = errorHandler;
-
+    self.appErrorHandler = errorHandler;
+#warning 如果已经有方法交换了，需要避免重复交换，可以算一个难点吧，因为有其他库
     if (protection == AppProtectionAll) {
 //        NSLog(@"AppProtectionAll");
         protection = AppProtectionUnrecognizedSelector | AppProtectionKVO | AppProtectionTimer | AppProtectionTypeContainers;
@@ -254,8 +266,6 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     }
 
     if (protection & AppProtectionTypeContainers) {
-//        NSLog(@"AppProtectionTypeContainers");
-
         if (!self.containersProtectOpen) {
             [self exchangeMethodForContainers];
             self.containersProtectOpen = YES;
@@ -266,6 +276,52 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 - (void)closeAppProtection:(AppProtection)protection {
 
 }
+
+- (void)addErrorWithType:(AppErrorType)errorType
+               callStack:(NSArray *)callStack
+                  detail:(NSString *)detail {
+    AppCatchError *error = [[AppCatchError alloc] initWithType:errorType errorCallStackSymbols:callStack detail:detail];
+    self.appErrorHandler(error);
+    [self addErrorInfo:error];
+}
+
+- (void)addErrorInfo:(AppCatchError *)errorInfo {
+    [self.errorInfos addObject:errorInfo];
+
+    [self updateBubbleUnreadCount];
+}
+
+- (void)updateBubbleUnreadCount {
+    [self.bubbleView updateUnreadCount:[self getUnreadCount]];
+}
+
+- (NSInteger)getUnreadCount {
+    __block NSInteger unreadCount = 0;
+    [self.errorInfos enumerateObjectsUsingBlock:^(AppCatchError * _Nonnull info, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!info.isRead) {
+            unreadCount++;
+        }
+    }];
+
+    return unreadCount;
+}
+
+
+#pragma mark - UI
+
+- (void)showErrorView {
+    self.bubbleView.hidden = NO;
+}
+
+- (void)hideErrorView {
+    self.bubbleView.hidden = YES;
+}
+
+- (void)showErrorListView {
+    // 需要把数据传过去
+}
+
+
 
 #pragma mark - 各种不同类型的开启
 
@@ -299,9 +355,32 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 }
 
 - (void)exchangeMethodForContainers {
-    [AppContainerProtector exchangeAllMethodsWithHandler:_errorHandler];
+    [AppContainerProtector exchangeAllMethodsWithHandler:self.appErrorHandler];
 }
 
+
+#pragma mark - Lazy load
+
+- (NSMutableArray<AppCatchError *> *)errorInfos {
+    if (!_errorInfos) {
+        _errorInfos = [NSMutableArray array];
+    }
+
+    return _errorInfos;
+}
+
+- (AppProtectorErrorBubbleView *)bubbleView {
+    if (!_bubbleView) {
+        _bubbleView = [AppProtectorErrorBubbleView create];
+        __weak typeof(self) weakSelf = self;
+        _bubbleView.clickBlock = ^{
+            // 都是单例 循环引用无所谓
+            [weakSelf showErrorListView];
+        };
+    }
+
+    return _bubbleView;
+}
 
 
 @end

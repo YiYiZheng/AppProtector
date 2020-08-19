@@ -11,6 +11,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+
+整体思路
+ 1. 有 error， AppProtector 就 add 一下给 bubbleView，bubble view 上显示未读过的数字
+ 2. 点击以后，present 一个错误信息列表 vc，只显示错误类型，已读和未读，颜色做区分。
+ 3. 每个 vc 还能再点击进去，查看详情
+
+ */
+
 @class AppCatchError;
 
 typedef NS_OPTIONS(NSInteger, AppProtection) {
@@ -42,6 +51,10 @@ typedef NS_OPTIONS(NSInteger, AppProtection) {
              errorHandler:(void(^)(AppCatchError * error))errorHandler;
 
 - (void)closeAppProtection:(AppProtection)protection;
+
+- (void)showErrorView;
+
+- (void)hideErrorView;
 
 @end
 
