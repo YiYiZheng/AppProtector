@@ -11,11 +11,15 @@
 #import "AppCatchError.h"
 #import "AppCommonTool.h"
 #import "AppContainerProtector.h"
-#import "AppProtectorErrorView.h"
+#import "APRErrorBubbleView.h"
 
 #import "NSObject+unrecognizedSelector.h"
 #import "NSObject+KVOProtector.h"
 #import "NSObject+TimerProtector.h"
+
+// 下面两个要搞走
+#import "APRErrorListViewController.h"
+#import "AppProtectorViewTool.h"
 
 #pragma mark - AppProtector
 
@@ -27,7 +31,7 @@
 @property (nonatomic, assign) BOOL containersProtectOpen;
 
 @property (nonatomic, strong) NSMutableArray <AppCatchError *> *errorInfos;
-@property (nonatomic, strong) AppProtectorErrorBubbleView *bubbleView;
+@property (nonatomic, strong) APRErrorBubbleView *bubbleView;
 
 @property (nonatomic, copy) APPErrorHandler appErrorHandler;
 
@@ -126,6 +130,10 @@
     return unreadCount;
 }
 
+- (void)handleListViewQuit {
+    [self updateBubbleUnreadCount];
+}
+
 
 #pragma mark - UI
 
@@ -138,10 +146,14 @@
 }
 
 - (void)showErrorListView {
-    // 需要把数据传过去
+    __weak typeof(self) weakSelf = self;
+    APRErrorListViewController *vc = [[APRErrorListViewController alloc] initWithErrorList:self.errorInfos quitBlock:^{
+        [weakSelf handleListViewQuit];
+    }];
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:vc];
+    navc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [AppCurViewController presentViewController:navc animated:YES completion:nil];
 }
-
-
 
 #pragma mark - 各种不同类型的开启
 
@@ -178,7 +190,6 @@
     [AppContainerProtector exchangeAllMethods];
 }
 
-
 #pragma mark - Lazy load
 
 - (NSMutableArray<AppCatchError *> *)errorInfos {
@@ -189,12 +200,11 @@
     return _errorInfos;
 }
 
-- (AppProtectorErrorBubbleView *)bubbleView {
+- (APRErrorBubbleView *)bubbleView {
     if (!_bubbleView) {
-        _bubbleView = [AppProtectorErrorBubbleView create];
+        _bubbleView = [APRErrorBubbleView create];
         __weak typeof(self) weakSelf = self;
         _bubbleView.clickBlock = ^{
-            // 都是单例 循环引用无所谓
             [weakSelf showErrorListView];
         };
     }

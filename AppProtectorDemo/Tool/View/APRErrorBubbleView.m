@@ -6,17 +6,13 @@
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import "AppProtectorErrorView.h"
+#import "APRErrorBubbleView.h"
+#import "AppProtectorViewTool.h"
 
-#define AppScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define AppScreenHeight  [UIScreen mainScreen].bounds.size.height
-#define AppKeyWindow [UIApplication sharedApplication].windows[0]
-
-
-@implementation AppProtectorErrorBubbleView
+@implementation APRErrorBubbleView
 
 + (nonnull instancetype)create {
-    AppProtectorErrorBubbleView *errorView = [super buttonWithType:UIButtonTypeCustom];
+    APRErrorBubbleView *errorView = [super buttonWithType:UIButtonTypeCustom];
     [errorView initUI];
 
     return errorView;

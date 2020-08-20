@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 //@end
 
-@interface AppProtectorErrorBubbleView : UIButton
+@interface APRErrorBubbleView : UIButton
 
 + (nonnull instancetype)create;
 
