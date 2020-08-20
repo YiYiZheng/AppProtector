@@ -95,6 +95,15 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		5337E0BA24EE1A89005126E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5337E0A624EAA280005126E2 /* AppProtectorErrorView.h */,
+				5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		533CB41E24D2AFBC00408594 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +143,7 @@
 		533CB44324D2AFD400408594 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				5337E0BA24EE1A89005126E2 /* View */,
 				5337E0AD24ED0F9E005126E2 /* Category */,
 				533CB44424D2B09400408594 /* AppProtector.h */,
 				533CB44524D2B09400408594 /* AppProtector.m */,
@@ -146,8 +156,6 @@
 				53CB8E9524E3E65A005F3FD4 /* AppCommonTool.h */,
 				53B54B7B24E4EE70002CF971 /* AppContainerProtector.h */,
 				53B54B7C24E4EE70002CF971 /* AppContainerProtector.m */,
-				5337E0A624EAA280005126E2 /* AppProtectorErrorView.h */,
-				5337E0A724EAA280005126E2 /* AppProtectorErrorView.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
