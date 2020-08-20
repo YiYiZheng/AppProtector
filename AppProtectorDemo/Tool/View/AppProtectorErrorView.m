@@ -25,7 +25,9 @@
 - (void)initUI {
     [self setTitle:@"protector" forState:UIControlStateNormal];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.frame = CGRectMake(20, 20, 50, 25);
+
+    CGFloat width = 50;
+    self.frame = CGRectMake(AppScreenWidth - 20 - width, 100, width, 25);
     self.titleLabel.font = [UIFont systemFontOfSize:10];
     self.backgroundColor = [UIColor yellowColor];
     [self addTarget:self action:@selector(onBtn) forControlEvents:UIControlEventTouchUpInside];
