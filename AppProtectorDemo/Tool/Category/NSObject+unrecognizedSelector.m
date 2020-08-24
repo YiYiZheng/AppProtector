@@ -21,7 +21,7 @@
 
         [AppProtector.shared addErrorWithType:AppErrorTypeUnrecognizedSelector
                                     callStack:[NSThread callStackSymbols]
-                                       detail:@""];
+                                       detail:[NSString stringWithFormat:@"[%@ %@]", NSStringFromClass(self.class), NSStringFromSelector(selector)]];
 
 
         return AppProtector.shared;

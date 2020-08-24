@@ -91,9 +91,9 @@ static void *appKVOProxyKey = &appKVOProxyKey;
             NSArray *keyPaths = [self.appKVOProxy getAllKeyPaths];
 
             if (keyPaths.count > 0) {
-                // 报错
-                NSString *errorInfo = [NSString stringWithFormat:@"被观察者-%@ dealloc 时其 KVO 未被移除", NSStringFromClass([self class])];
-                [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
+                // 不应报错，因为不需要修复
+//                NSString *errorInfo = [NSString stringWithFormat:@"被观察者-%@ dealloc 时其 KVO 未被移除", NSStringFromClass([self class])];
+//                [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
 
                 // 纠正，取消观察
                 [keyPaths enumerateObjectsUsingBlock:^(NSString *keyPath, NSUInteger idx, BOOL * _Nonnull stop) {

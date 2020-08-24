@@ -55,7 +55,7 @@ APPErrorHandler _Nullable _timerErrorHandler;
     if (_aTarget) {
         // 说明应该继续触发
         if ([_aTarget respondsToSelector:_aSelector]) {
-            BMP_SuppressPerformSelectorLeakWarning(
+            APP_SuppressPerformSelectorLeakWarning(
                                                    [_aTarget performSelector:_aSelector];
                                                    );
 

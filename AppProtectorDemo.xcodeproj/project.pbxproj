@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		532A492724F35E7900B3E7F9 /* UIViewController+Leaks.m in Sources */ = {isa = PBXBuildFile; fileRef = 532A492624F35E7900B3E7F9 /* UIViewController+Leaks.m */; };
+		532A492D24F3605300B3E7F9 /* NSObject+Leaks.m in Sources */ = {isa = PBXBuildFile; fileRef = 532A492C24F3605300B3E7F9 /* NSObject+Leaks.m */; };
 		5337E0A824EAA280005126E2 /* APRErrorBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0A724EAA280005126E2 /* APRErrorBubbleView.m */; };
 		5337E0B324ED0FFA005126E2 /* NSObject+unrecognizedSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B224ED0FFA005126E2 /* NSObject+unrecognizedSelector.m */; };
 		5337E0B624ED10DE005126E2 /* NSObject+KVOProtector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B524ED10DE005126E2 /* NSObject+KVOProtector.m */; };
@@ -34,6 +36,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		532A492524F35E7900B3E7F9 /* UIViewController+Leaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Leaks.h"; sourceTree = "<group>"; };
+		532A492624F35E7900B3E7F9 /* UIViewController+Leaks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Leaks.m"; sourceTree = "<group>"; };
+		532A492B24F3605300B3E7F9 /* NSObject+Leaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Leaks.h"; sourceTree = "<group>"; };
+		532A492C24F3605300B3E7F9 /* NSObject+Leaks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Leaks.m"; sourceTree = "<group>"; };
 		5337E0A624EAA280005126E2 /* APRErrorBubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRErrorBubbleView.h; sourceTree = "<group>"; };
 		5337E0A724EAA280005126E2 /* APRErrorBubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APRErrorBubbleView.m; sourceTree = "<group>"; };
 		5337E0B124ED0FFA005126E2 /* NSObject+unrecognizedSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+unrecognizedSelector.h"; sourceTree = "<group>"; };
@@ -93,6 +99,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		532A492324F0F61A00B3E7F9 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				53CB8E7B24DD57FF005F3FD4 /* AppCatchError.h */,
+				53CB8E7C24DD57FF005F3FD4 /* AppCatchError.m */,
+				53CB8E8824E24775005F3FD4 /* AppKVOPorxy.h */,
+				53CB8E8924E24775005F3FD4 /* AppKVOPorxy.m */,
+				53CB8E9224E3E19E005F3FD4 /* AppTimerProxy.h */,
+				53CB8E9324E3E19E005F3FD4 /* AppTimerProxy.m */,
+				53CB8E9524E3E65A005F3FD4 /* AppCommonTool.h */,
+				53B54B7B24E4EE70002CF971 /* AppContainerProtector.h */,
+				53B54B7C24E4EE70002CF971 /* AppContainerProtector.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		5337E0AD24ED0F9E005126E2 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +124,10 @@
 				5337E0B524ED10DE005126E2 /* NSObject+KVOProtector.m */,
 				5337E0B724ED119B005126E2 /* NSObject+TimerProtector.h */,
 				5337E0B824ED119B005126E2 /* NSObject+TimerProtector.m */,
+				532A492524F35E7900B3E7F9 /* UIViewController+Leaks.h */,
+				532A492624F35E7900B3E7F9 /* UIViewController+Leaks.m */,
+				532A492B24F3605300B3E7F9 /* NSObject+Leaks.h */,
+				532A492C24F3605300B3E7F9 /* NSObject+Leaks.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -161,19 +187,11 @@
 		533CB44324D2AFD400408594 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				532A492324F0F61A00B3E7F9 /* Helper */,
 				5337E0BA24EE1A89005126E2 /* View */,
 				5337E0AD24ED0F9E005126E2 /* Category */,
 				533CB44424D2B09400408594 /* AppProtector.h */,
 				533CB44524D2B09400408594 /* AppProtector.m */,
-				53CB8E7B24DD57FF005F3FD4 /* AppCatchError.h */,
-				53CB8E7C24DD57FF005F3FD4 /* AppCatchError.m */,
-				53CB8E8824E24775005F3FD4 /* AppKVOPorxy.h */,
-				53CB8E8924E24775005F3FD4 /* AppKVOPorxy.m */,
-				53CB8E9224E3E19E005F3FD4 /* AppTimerProxy.h */,
-				53CB8E9324E3E19E005F3FD4 /* AppTimerProxy.m */,
-				53CB8E9524E3E65A005F3FD4 /* AppCommonTool.h */,
-				53B54B7B24E4EE70002CF971 /* AppContainerProtector.h */,
-				53B54B7C24E4EE70002CF971 /* AppContainerProtector.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -316,6 +334,7 @@
 				53CB8E9424E3E19E005F3FD4 /* AppTimerProxy.m in Sources */,
 				53CB8E8A24E24775005F3FD4 /* AppKVOPorxy.m in Sources */,
 				53CB8E7A24DD4980005F3FD4 /* UnrecognizedSelectorViewController.m in Sources */,
+				532A492D24F3605300B3E7F9 /* NSObject+Leaks.m in Sources */,
 				5337E0B924ED119B005126E2 /* NSObject+TimerProtector.m in Sources */,
 				5350152424EE2842002CF222 /* APRErrorDetailViewController.m in Sources */,
 				53B54B8124E51CAE002CF971 /* ContainerViewController.m in Sources */,
@@ -324,6 +343,7 @@
 				533CB42C24D2AFBC00408594 /* AppDelegate.m in Sources */,
 				533CB43D24D2AFBE00408594 /* main.m in Sources */,
 				533CB42F24D2AFBC00408594 /* SceneDelegate.m in Sources */,
+				532A492724F35E7900B3E7F9 /* UIViewController+Leaks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

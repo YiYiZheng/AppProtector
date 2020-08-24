@@ -52,8 +52,7 @@
 }
 
 - (NSString *)fullDescription {
-    NSString *str = [NSString stringWithFormat:@"%@ \n\nCall stack %@", self.errorName, self.errorCallStackSymbols];
-
+    NSString *str = [NSString stringWithFormat:@"%@ \n详情 %@ \n\nCall stack %@", self.errorName, self.detail, self.errorCallStackSymbols];
     return str;
 }
 

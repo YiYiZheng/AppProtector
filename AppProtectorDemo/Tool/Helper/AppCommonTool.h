@@ -12,7 +12,7 @@
 #ifndef AppCommonTool_h
 #define AppCommonTool_h
 
-#define BMP_SuppressPerformSelectorLeakWarning(Stuff)\
+#define APP_SuppressPerformSelectorLeakWarning(Stuff)\
 do { \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
