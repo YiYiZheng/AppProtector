@@ -46,6 +46,9 @@
         case AppErrorTypeContainers:
             name = @"Containers 错误";
             break;
+        case AppErrorTypeRetainCycle:
+            name = @"循环引用";
+            break;
     }
 
     return name;

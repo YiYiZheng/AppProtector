@@ -18,7 +18,9 @@ typedef NS_ENUM(NSInteger, AppErrorType) {
     /*Timer异常*/
     AppErrorTypeTimer,
     /*Containers*/
-    AppErrorTypeContainers
+    AppErrorTypeContainers,
+    /*Retain Cycle*/
+    AppErrorTypeRetainCycle
 };
 
 @interface AppCatchError : NSObject

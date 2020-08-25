@@ -1,16 +1,16 @@
 //
-//  NSObject+Leaks.h
+//  UITabBarController+Leaks.h
 //  AppProtectorDemo
 //
-//  Created by 郑尧元 on 2020/8/24.
+//  Created by 郑尧元 on 2020/8/25.
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSObject (Leaks)
+@interface UITabBarController (Leaks)
 
 @end
 

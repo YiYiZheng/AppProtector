@@ -190,6 +190,10 @@
     [AppContainerProtector exchangeAllMethods];
 }
 
+- (void)exchangeMethodForRetainCycle {
+
+}
+
 #pragma mark - Lazy load
 
 - (NSMutableArray<AppCatchError *> *)errorInfos {
