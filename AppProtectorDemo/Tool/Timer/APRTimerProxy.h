@@ -1,5 +1,5 @@
 //
-//  AppTimerProxy.h
+//  APRTimerProxy.h
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/12.
@@ -10,16 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AppCatchError;
+@class APRCatchError;
 
-@interface AppTimerProxy : NSObject
+@interface APRTimerProxy : NSObject
 
 + (instancetype)scheduleWithTimeInterval:(NSTimeInterval)ti
                                   target:(id)aTarget
                                 selector:(SEL)aSelector
                                 userInfo:(id)userInfo
                                  repeats:(BOOL)yesOrNo
-                            errorHandler:(void(^)(AppCatchError * error))errorHandler;
+                            errorHandler:(void(^)(APRCatchError * error))errorHandler;
 
 @end
 

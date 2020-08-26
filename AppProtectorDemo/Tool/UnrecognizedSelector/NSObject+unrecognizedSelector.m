@@ -7,8 +7,9 @@
 //
 
 #import "NSObject+unrecognizedSelector.h"
-#import "AppCommonTool.h"
+#import "APRCommonTool.h"
 #import "AppProtector.h"
+#import "AppProtector+internal.h"
 
 @implementation NSObject (unrecognizedSelector)
 

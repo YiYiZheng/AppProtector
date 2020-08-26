@@ -1,14 +1,14 @@
 //
-//  AppCatchError.m
+//  APRCatchError.m
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/7.
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import "AppCatchError.h"
+#import "APRCatchError.h"
 
-@interface AppCatchError ()
+@interface APRCatchError ()
 
 @property (nonatomic, assign) AppErrorType errorType;
 
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation AppCatchError
+@implementation APRCatchError
 
 - (instancetype)initWithType:(AppErrorType)errorType
        errorCallStackSymbols:(NSArray *)errorCallStackSymbols

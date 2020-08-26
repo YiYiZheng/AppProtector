@@ -1,12 +1,12 @@
 //
-//  AppKVOPorxy.m
+//  APRKVOPorxy.m
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/11.
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import "AppKVOPorxy.h"
+#import "APRKVOPorxy.h"
 
 @interface AppKVOInfo : NSObject
 {
@@ -27,7 +27,7 @@
 
 @end
 
-@interface AppKVOPorxy ()
+@interface APRKVOPorxy ()
 
 /**
  存储结构
@@ -40,7 +40,7 @@
 
 @end
 
-@implementation AppKVOPorxy
+@implementation APRKVOPorxy
 
 - (instancetype)init {
     self = [super init];

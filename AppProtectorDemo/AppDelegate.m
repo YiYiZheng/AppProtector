@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 //    [AppProtector.shared closeAppProtection:AppProtectionAll];
-    [AppProtector.shared openAppProtection:AppProtectionAll errorHandler:^(AppCatchError * _Nonnull error) {
+    [AppProtector.shared openAppProtection:AppProtectionAll errorHandler:^(APRCatchError * _Nonnull error) {
         NSLog(@"%@", error.errorName);
         if (error.detail.length > 0) {
             NSLog(@"detail: %@", error.detail);

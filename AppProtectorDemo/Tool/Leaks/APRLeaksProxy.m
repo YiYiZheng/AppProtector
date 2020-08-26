@@ -9,6 +9,7 @@
 #import "APRLeaksProxy.h"
 #import <objc/runtime.h>
 #import "AppProtector.h"
+#import "AppProtector+internal.h"
 
 static NSMutableSet *leakedObjectPtrs;
 

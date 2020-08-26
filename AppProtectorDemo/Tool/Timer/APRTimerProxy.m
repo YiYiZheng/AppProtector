@@ -1,19 +1,19 @@
 //
-//  AppTimerProxy.m
+//  APRTimerProxy.m
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/12.
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import "AppTimerProxy.h"
-#import "AppCatchError.h"
-#import "AppCommonTool.h"
+#import "APRTimerProxy.h"
+#import "APRCatchError.h"
+#import "APRCommonTool.h"
 
 // 不是成员变量的原因 不需要有很多份
 APPErrorHandler _Nullable _timerErrorHandler;
 
-@implementation AppTimerProxy {
+@implementation APRTimerProxy {
     @package
     NSTimeInterval _ti;
     __weak id _aTarget;
@@ -29,7 +29,7 @@ APPErrorHandler _Nullable _timerErrorHandler;
                                 selector:(SEL)aSelector
                                 userInfo:(id)userInfo
                                  repeats:(BOOL)yesOrNo
-                            errorHandler:(void(^)(AppCatchError * error))errorHandler {
+                            errorHandler:(void(^)(APRCatchError * error))errorHandler {
     return [[self alloc] initWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:errorHandler];
 }
 
@@ -38,7 +38,7 @@ APPErrorHandler _Nullable _timerErrorHandler;
                             selector:(SEL)aSelector
                             userInfo:(id)userInfo
                              repeats:(BOOL)yesOrNo
-                        errorHandler:(void(^)(AppCatchError * error))errorHandler {
+                        errorHandler:(void(^)(APRCatchError * error))errorHandler {
     if (self = [super init]) {
         _ti = ti;
         _aTarget = aTarget;
@@ -64,7 +64,7 @@ APPErrorHandler _Nullable _timerErrorHandler;
         // 不应该触发了，要销毁
         // 应该把对应 target 信息打印出来
         NSString *detail = [NSString stringWithFormat:@"发生类 %@", _targetClassName];
-        AppCatchError *error = [[AppCatchError alloc] initWithType:AppErrorTypeTimer errorCallStackSymbols:[NSThread callStackSymbols]  detail:detail];
+        APRCatchError *error = [[APRCatchError alloc] initWithType:AppErrorTypeTimer errorCallStackSymbols:[NSThread callStackSymbols]  detail:detail];
         _timerErrorHandler(error);
 
 //        NSLog(@"targetClass %@ ", _targetClassName);

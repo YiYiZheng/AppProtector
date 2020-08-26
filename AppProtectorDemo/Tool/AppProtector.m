@@ -8,9 +8,9 @@
 
 #import "AppProtector.h"
 #import <objc/runtime.h>
-#import "AppCatchError.h"
-#import "AppCommonTool.h"
-#import "AppContainerProtector.h"
+#import "APRCatchError.h"
+#import "APRCommonTool.h"
+#import "APRContainerProtector.h"
 #import "APRErrorBubbleView.h"
 
 #import "NSObject+unrecognizedSelector.h"
@@ -35,7 +35,7 @@
 @property (nonatomic, assign) BOOL containersProtectOpen;
 @property (nonatomic, assign) BOOL retainCycleDetectOpen;
 
-@property (nonatomic, strong) NSMutableArray <AppCatchError *> *errorInfos;
+@property (nonatomic, strong) NSMutableArray <APRCatchError *> *errorInfos;
 @property (nonatomic, strong) APRErrorBubbleView *bubbleView;
 
 @property (nonatomic, copy) APPErrorHandler appErrorHandler;
@@ -109,12 +109,12 @@
 - (void)addErrorWithType:(AppErrorType)errorType
                callStack:(NSArray *)callStack
                   detail:(NSString *)detail {
-    AppCatchError *error = [[AppCatchError alloc] initWithType:errorType errorCallStackSymbols:callStack detail:detail];
+    APRCatchError *error = [[APRCatchError alloc] initWithType:errorType errorCallStackSymbols:callStack detail:detail];
     self.appErrorHandler(error);
     [self addErrorInfo:error];
 }
 
-- (void)addErrorInfo:(AppCatchError *)errorInfo {
+- (void)addErrorInfo:(APRCatchError *)errorInfo {
     [self.errorInfos addObject:errorInfo];
 
     [self updateBubbleUnreadCount];
@@ -126,7 +126,7 @@
 
 - (NSInteger)getUnreadCount {
     __block NSInteger unreadCount = 0;
-    [self.errorInfos enumerateObjectsUsingBlock:^(AppCatchError * _Nonnull info, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.errorInfos enumerateObjectsUsingBlock:^(APRCatchError * _Nonnull info, NSUInteger idx, BOOL * _Nonnull stop) {
         if (!info.isRead) {
             unreadCount++;
         }
@@ -159,7 +159,7 @@
     [AppCurViewController presentViewController:navc animated:YES completion:nil];
 }
 
-#pragma mark - 各种不同类型的开启
+#pragma mark - Exchange method
 
 - (void)exchangeMethodForUnrecognizedSelector {
     app_exchangeInstanceMethod([NSObject class], @selector(forwardingTargetForSelector:), [NSObject class], @selector(app_swizzle_forwardingTargetForSelector:));
@@ -191,7 +191,7 @@
 }
 
 - (void)exchangeMethodForContainers {
-    [AppContainerProtector exchangeAllMethods];
+    [APRContainerProtector exchangeAllMethods];
 }
 
 - (void)exchangeMethodForRetainCycle {
@@ -209,7 +209,7 @@
 
 #pragma mark - Lazy load
 
-- (NSMutableArray<AppCatchError *> *)errorInfos {
+- (NSMutableArray<APRCatchError *> *)errorInfos {
     if (!_errorInfos) {
         _errorInfos = [NSMutableArray array];
     }

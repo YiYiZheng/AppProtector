@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AppCatchError;
+@class APRCatchError;
 
 @interface APRErrorListViewController : UIViewController
 
-- (instancetype)initWithErrorList:(NSArray <AppCatchError*>*)list
+- (instancetype)initWithErrorList:(NSArray <APRCatchError*>*)list
                         quitBlock:(void (^) (void))quitBlock;
 
 @end

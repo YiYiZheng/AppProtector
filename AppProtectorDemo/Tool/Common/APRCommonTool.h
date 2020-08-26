@@ -1,5 +1,5 @@
 //
-//  AppCommonTool.h
+//  APRCommonTool.h
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/12.
@@ -7,10 +7,10 @@
 //
 
 #import <objc/runtime.h>
-#import "AppCatchError.h"
+#import "APRCatchError.h"
 
-#ifndef AppCommonTool_h
-#define AppCommonTool_h
+#ifndef APRCommonTool_h
+#define APRCommonTool_h
 
 #define APP_SuppressPerformSelectorLeakWarning(Stuff)\
 do { \
@@ -20,8 +20,7 @@ Stuff; \
 _Pragma("clang diagnostic pop") \
 } while (0)
 
-
-typedef void(^APPErrorHandler)(AppCatchError * error);
+typedef void(^APPErrorHandler)(APRCatchError * error);
 
 #pragma mark - C 方法
 
@@ -65,4 +64,4 @@ static inline BOOL isSystemClass(Class cls) {
 }
 
 
-#endif /* AppCommonTool_h */
+#endif /* APRCommonTool_h */

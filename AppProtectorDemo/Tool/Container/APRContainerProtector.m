@@ -1,19 +1,15 @@
 //
-//  AppContainerProtector.m
+//  APRContainerProtector.m
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/13.
 //  Copyright © 2020 Karl. All rights reserved.
 //
 
-#import "AppContainerProtector.h"
-//#import "AppCatchError.h"
-
-
-#import "AppCommonTool.h"
+#import "APRContainerProtector.h"
+#import "APRCommonTool.h"
 #import "AppProtector.h"
-
-//APPErrorHandler _Nullable _containerErrorHandler;
+#import "AppProtector+internal.h"
 
 #pragma mark - NSArray
 
@@ -269,7 +265,7 @@
 
 #pragma mark - AppContainerProtector
 
-@implementation AppContainerProtector
+@implementation APRContainerProtector
 
 + (void)exchangeAllMethods {
     [self exchangeAllNSArrayMethods];

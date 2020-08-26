@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AppCatchError;
+@class APRCatchError;
 
 //@interface AppProtector (view)
 

@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "AppCatchError.h"
-
+#import "APRCatchError.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,39 +30,23 @@ typedef NS_OPTIONS(NSInteger, AppProtection) {
     AppProtectionKVO = 1<<1,
     /*Timer保护*/
     AppProtectionTimer = 1<<2,
-    /*Containers保护：包括NSArray、NSMutableArray、NSDictionary、NSMutableDictionary、NSString、NSMutableString*/
+    /*Containers Include NSArray、NSMutableArray、NSDictionary、NSMutableDictionary*/
     AppProtectionTypeContainers = 1<<3,
     /*Retain Cycle detect*/
     AppProtectionTypeRetainCycle = 1<<4
 };
 
-/**
-1. unrecognized selector
-2. kvo
-3. timer
-4. container
-5. vc 存在内存泄露
-
- */
 @interface AppProtector : NSObject
 
 + (nonnull instancetype)shared;
 
 - (void)openAppProtection:(AppProtection)protection
-             errorHandler:(void(^)(AppCatchError * error))errorHandler;
-
+             errorHandler:(void(^)(APRCatchError * error))errorHandler;
 - (void)closeAppProtection:(AppProtection)protection;
 
 - (void)showErrorView;
-
 - (void)hideErrorView;
 
-#warning 以下接口要换一个地方放
-- (void)addErrorWithType:(AppErrorType)errorType
-               callStack:(NSArray *)callStack
-                  detail:(NSString *)detail;
-
-- (void)addErrorInfo:(AppCatchError *)errorInfo;
 
 @end
 

@@ -10,13 +10,13 @@
 #import "AppProtectorViewTool.h"
 
 #import "APRErrorDetailViewController.h"
-#import "AppCatchError.h"
+#import "APRCatchError.h"
 
 @interface APRErrorListViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, copy) NSArray <AppCatchError*>* errorList;
+@property (nonatomic, copy) NSArray <APRCatchError*>* errorList;
 
 @property (nonatomic, copy) void (^quitBlock) (void);
 
@@ -25,7 +25,7 @@
 
 @implementation APRErrorListViewController
 
-- (instancetype)initWithErrorList:(NSArray <AppCatchError*>*)list
+- (instancetype)initWithErrorList:(NSArray <APRCatchError*>*)list
                         quitBlock:(void (^) (void))quitBlock {
     if (self = [super init]) {
         self.errorList = list;
@@ -58,7 +58,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell"];
 
-    AppCatchError *error = self.errorList[indexPath.row];
+    APRCatchError *error = self.errorList[indexPath.row];
 
     cell.textLabel.text = [NSString stringWithFormat:@"%@", error.errorName];
     cell.textLabel.textColor = error.isRead ?  [UIColor grayColor] : [UIColor blackColor];
@@ -67,7 +67,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AppCatchError *error = self.errorList[indexPath.row];
+    APRCatchError *error = self.errorList[indexPath.row];
     error.isRead = YES;
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

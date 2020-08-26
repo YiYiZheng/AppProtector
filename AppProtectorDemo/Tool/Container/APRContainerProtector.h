@@ -1,5 +1,5 @@
 //
-//  AppContainerProtector.h
+//  APRContainerProtector.h
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/13.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AppContainerProtector : NSObject
+@interface APRContainerProtector : NSObject
 
 + (void)exchangeAllMethods;
 

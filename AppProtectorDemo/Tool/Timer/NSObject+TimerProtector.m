@@ -7,15 +7,16 @@
 //
 
 #import "NSObject+TimerProtector.h"
-#import "AppCommonTool.h"
+#import "APRCommonTool.h"
 #import "AppProtector.h"
-#import "AppTimerProxy.h"
+#import "APRTimerProxy.h"
+#import "AppProtector+internal.h"
 
 @implementation NSObject (TimerProtector)
 
 + (NSTimer *)app_scheduledTimerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo {
     if (yesOrNo && !isSystemClass([aTarget class])) {
-        AppTimerProxy *proxy = [AppTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(AppCatchError * _Nonnull error) {
+        APRTimerProxy *proxy = [APRTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(APRCatchError * _Nonnull error) {
             [AppProtector.shared addErrorInfo:error];
         }];
 
@@ -27,7 +28,7 @@
 
 + (NSTimer *)app_timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo {
     if (yesOrNo && !isSystemClass([aTarget class])) {
-        AppTimerProxy *proxy = [AppTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(AppCatchError * _Nonnull error) {
+        APRTimerProxy *proxy = [APRTimerProxy scheduleWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo errorHandler:^(APRCatchError * _Nonnull error) {
             [AppProtector.shared addErrorInfo:error];
         }];
 

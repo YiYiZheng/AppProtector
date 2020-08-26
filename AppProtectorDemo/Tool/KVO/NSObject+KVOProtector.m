@@ -7,9 +7,10 @@
 //
 
 #import "NSObject+KVOProtector.h"
-#import "AppKVOPorxy.h"
-#import "AppCommonTool.h"
+#import "APRKVOPorxy.h"
+#import "APRCommonTool.h"
 #import "AppProtector.h"
+#import "AppProtector+internal.h"
 
 @implementation NSObject (KVOProtector)
 
@@ -19,15 +20,15 @@ static NSString *const AppProtectorValue = @"App_KVOProtector";
 
 static void *appKVOProxyKey = &appKVOProxyKey;
 
-- (void)setAppKVOProxy:(AppKVOPorxy *)appKVOProxy {
+- (void)setAppKVOProxy:(APRKVOPorxy *)appKVOProxy {
     objc_setAssociatedObject(self, appKVOProxyKey, appKVOProxy, OBJC_ASSOCIATION_RETAIN);
 }
 
-- (AppKVOPorxy *)appKVOProxy {
+- (APRKVOPorxy *)appKVOProxy {
     id appKVOProxy = objc_getAssociatedObject(self, appKVOProxyKey);
 
     if (appKVOProxy == nil) {
-        appKVOProxy = [[AppKVOPorxy alloc] init];
+        appKVOProxy = [[APRKVOPorxy alloc] init];
         self.appKVOProxy = appKVOProxy;
     }
 

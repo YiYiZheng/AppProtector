@@ -1,5 +1,5 @@
 //
-//  AppCatchError.h
+//  APRCatchError.h
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/7.
@@ -23,14 +23,12 @@ typedef NS_ENUM(NSInteger, AppErrorType) {
     AppErrorTypeRetainCycle
 };
 
-@interface AppCatchError : NSObject
+@interface APRCatchError : NSObject
 
 @property (nonatomic, assign, readonly) AppErrorType errorType;
 @property (nonatomic, copy, readonly) NSArray *errorCallStackSymbols;
 @property (nonatomic, copy, readonly) NSString *errorName;
 @property (nonatomic, copy, readonly) NSString *detail;
-
-
 @property (nonatomic, copy, readonly) NSString *fullDescription;
 
 /// 是否已被查看过，默认是未读

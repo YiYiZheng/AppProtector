@@ -1,5 +1,5 @@
 //
-//  AppKVOPorxy.h
+//  APRKVOPorxy.h
 //  AppProtectorDemo
 //
 //  Created by 郑尧元 on 2020/8/11.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AppKVOPorxy : NSObject
+@interface APRKVOPorxy : NSObject
 
 - (BOOL)addKVOInfoWithObserver:(NSObject *)observer
                        keyPath:(NSString *)keyPath
