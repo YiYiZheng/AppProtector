@@ -33,7 +33,9 @@ typedef NS_OPTIONS(NSInteger, AppProtection) {
     /*Timer保护*/
     AppProtectionTimer = 1<<2,
     /*Containers保护：包括NSArray、NSMutableArray、NSDictionary、NSMutableDictionary、NSString、NSMutableString*/
-    AppProtectionTypeContainers = 1<<3
+    AppProtectionTypeContainers = 1<<3,
+    /*Retain Cycle detect*/
+    AppProtectionTypeRetainCycle = 1<<4
 };
 
 /**

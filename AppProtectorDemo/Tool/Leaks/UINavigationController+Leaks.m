@@ -12,6 +12,10 @@
 
 @implementation UINavigationController (Leaks)
 
+- (void)dealloc {
+    NSLog(@"UINavigationController dealloc");
+}
+
 - (UIViewController *)apr_popViewControllerAnimated:(BOOL)animated {
     UIViewController *poppedViewController = [self apr_popViewControllerAnimated:animated];
 

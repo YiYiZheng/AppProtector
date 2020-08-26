@@ -15,6 +15,7 @@
 		5337E0B924ED119B005126E2 /* NSObject+TimerProtector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0B824ED119B005126E2 /* NSObject+TimerProtector.m */; };
 		5337E0C324EE1CC2005126E2 /* APRErrorListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337E0C124EE1CC2005126E2 /* APRErrorListViewController.m */; };
 		5337E0C424EE1CC2005126E2 /* APRErrorListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5337E0C224EE1CC2005126E2 /* APRErrorListViewController.xib */; };
+		533869A824F5439D0004740E /* RetainCycleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533869A724F5439D0004740E /* RetainCycleViewController.m */; };
 		533CB42C24D2AFBC00408594 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42B24D2AFBC00408594 /* AppDelegate.m */; };
 		533CB42F24D2AFBC00408594 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB42E24D2AFBC00408594 /* SceneDelegate.m */; };
 		533CB43224D2AFBC00408594 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533CB43124D2AFBC00408594 /* ViewController.m */; };
@@ -56,6 +57,8 @@
 		5337E0C124EE1CC2005126E2 /* APRErrorListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APRErrorListViewController.m; sourceTree = "<group>"; };
 		5337E0C224EE1CC2005126E2 /* APRErrorListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APRErrorListViewController.xib; sourceTree = "<group>"; };
 		5337E0C524EE22E3005126E2 /* AppProtectorViewTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppProtectorViewTool.h; sourceTree = "<group>"; };
+		533869A624F5439D0004740E /* RetainCycleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RetainCycleViewController.h; sourceTree = "<group>"; };
+		533869A724F5439D0004740E /* RetainCycleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RetainCycleViewController.m; sourceTree = "<group>"; };
 		533CB42724D2AFBC00408594 /* AppProtectorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppProtectorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		533CB42A24D2AFBC00408594 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		533CB42B24D2AFBC00408594 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -205,11 +208,13 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
-		534F6DAA24EA625000E0F901 /* New Group */ = {
+		534F6DAA24EA625000E0F901 /* RetainCycle */ = {
 			isa = PBXGroup;
 			children = (
+				533869A624F5439D0004740E /* RetainCycleViewController.h */,
+				533869A724F5439D0004740E /* RetainCycleViewController.m */,
 			);
-			path = "New Group";
+			path = RetainCycle;
 			sourceTree = "<group>";
 		};
 		53B54B7724E4E7BE002CF971 /* Timer */ = {
@@ -233,7 +238,7 @@
 		53CB8E7624DD3F7E005F3FD4 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				534F6DAA24EA625000E0F901 /* New Group */,
+				534F6DAA24EA625000E0F901 /* RetainCycle */,
 				53B54B7E24E51C8F002CF971 /* Container */,
 				53B54B7724E4E7BE002CF971 /* Timer */,
 				53CB8E8E24E2D729005F3FD4 /* KVO */,
@@ -355,6 +360,7 @@
 				5337E0A824EAA280005126E2 /* APRErrorBubbleView.m in Sources */,
 				53CB8E7D24DD57FF005F3FD4 /* AppCatchError.m in Sources */,
 				53CB8E9124E2D73F005F3FD4 /* KVOViewController.m in Sources */,
+				533869A824F5439D0004740E /* RetainCycleViewController.m in Sources */,
 				533CB44624D2B09400408594 /* AppProtector.m in Sources */,
 				53B54B7D24E4EE70002CF971 /* AppContainerProtector.m in Sources */,
 				53F5A5F124F509D4001F953B /* UITabBarController+Leaks.m in Sources */,

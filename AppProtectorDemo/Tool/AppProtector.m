@@ -17,7 +17,11 @@
 #import "NSObject+KVOProtector.h"
 #import "NSObject+TimerProtector.h"
 
-// 下面两个要搞走
+// About Leaks
+#import "UIViewController+Leaks.h"
+#import "UINavigationController+Leaks.h"
+
+// About view
 #import "APRErrorListViewController.h"
 #import "AppProtectorViewTool.h"
 
@@ -29,6 +33,7 @@
 @property (nonatomic, assign) BOOL kvoProtectOpen;
 @property (nonatomic, assign) BOOL timerProtectOpen;
 @property (nonatomic, assign) BOOL containersProtectOpen;
+@property (nonatomic, assign) BOOL retainCycleDetectOpen;
 
 @property (nonatomic, strong) NSMutableArray <AppCatchError *> *errorInfos;
 @property (nonatomic, strong) APRErrorBubbleView *bubbleView;
@@ -48,57 +53,57 @@
     return instance;
 }
 
-//- (instancetype)init {
-//    if (self = [super init]) {
-//    }
-//    return self;
-//}
-
 - (void)openAppProtection:(AppProtection)protection
              errorHandler:(APPErrorHandler)errorHandler {
     self.appErrorHandler = errorHandler;
-#warning How to check whether is already exchange?
+
+    [self openOrCloseAppProtection:protection isOpen:YES];
+}
+
+- (void)closeAppProtection:(AppProtection)protection {
+    [self openOrCloseAppProtection:protection isOpen:NO];
+}
+
+- (void)openOrCloseAppProtection:(AppProtection)protection isOpen:(BOOL)isOpen {
     if (protection == AppProtectionAll) {
-//        NSLog(@"AppProtectionAll");
-        protection = AppProtectionUnrecognizedSelector | AppProtectionKVO | AppProtectionTimer | AppProtectionTypeContainers;
+        protection = AppProtectionUnrecognizedSelector | AppProtectionKVO | AppProtectionTimer | AppProtectionTypeContainers | AppProtectionTypeRetainCycle;
     }
 
     if (protection & AppProtectionUnrecognizedSelector) {
-//        NSLog(@"AppProtectionUnrecognizedSelector");
-        // 避免重复开启
-        if (!self.unrecognizedSelectorProtectOpen) {
+        if (self.unrecognizedSelectorProtectOpen != isOpen) {
             // 开启
             [self exchangeMethodForUnrecognizedSelector];
-            self.unrecognizedSelectorProtectOpen = YES;
+            self.unrecognizedSelectorProtectOpen = isOpen;
         }
     }
 
     if (protection & AppProtectionKVO) {
-//        NSLog(@"AppProtectionKVO");
-        if (!self.kvoProtectOpen) {
+        if (self.kvoProtectOpen != isOpen) {
             [self exchangeMethodForKVO];
-            self.kvoProtectOpen = YES;
+            self.kvoProtectOpen = isOpen;
         }
     }
 
     if (protection & AppProtectionTimer) {
-//        NSLog(@"AppProtectionTimer");
-        if (!self.timerProtectOpen) {
+        if (self.timerProtectOpen != isOpen) {
             [self exchangeMethodForTimer];
-            self.timerProtectOpen = YES;
+            self.timerProtectOpen = isOpen;
         }
     }
 
     if (protection & AppProtectionTypeContainers) {
-        if (!self.containersProtectOpen) {
+        if (self.containersProtectOpen != isOpen) {
             [self exchangeMethodForContainers];
-            self.containersProtectOpen = YES;
+            self.containersProtectOpen = isOpen;
         }
     }
-}
 
-- (void)closeAppProtection:(AppProtection)protection {
-
+    if (protection & AppProtectionTypeRetainCycle) {
+        if (self.retainCycleDetectOpen != isOpen) {
+            [self exchangeMethodForRetainCycle];
+            self.retainCycleDetectOpen = isOpen;
+        }
+    }
 }
 
 - (void)addErrorWithType:(AppErrorType)errorType
@@ -133,7 +138,6 @@
 - (void)handleListViewQuit {
     [self updateBubbleUnreadCount];
 }
-
 
 #pragma mark - UI
 
@@ -191,7 +195,16 @@
 }
 
 - (void)exchangeMethodForRetainCycle {
+    Class vcClass = [UIViewController class];
+    app_exchangeInstanceMethod(vcClass, @selector(viewDidDisappear:), vcClass, @selector(apr_viewDidDisappear:));
+    app_exchangeInstanceMethod(vcClass, @selector(viewWillAppear:), vcClass, @selector(apr_viewWillAppear:));
+    app_exchangeInstanceMethod(vcClass, @selector(dismissViewControllerAnimated:completion:), vcClass, @selector(apr_dismissViewControllerAnimated:completion:));
 
+
+    Class navClass = [UINavigationController class];
+    app_exchangeInstanceMethod(navClass, @selector(popViewControllerAnimated:), navClass, @selector(apr_popViewControllerAnimated:));
+    app_exchangeInstanceMethod(navClass, @selector(popToViewController:animated:), navClass, @selector(apr_popToViewController:animated:));
+    app_exchangeInstanceMethod(navClass, @selector(popToRootViewControllerAnimated:), navClass, @selector(apr_popToRootViewControllerAnimated:));
 }
 
 #pragma mark - Lazy load

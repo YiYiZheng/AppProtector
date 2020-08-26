@@ -8,6 +8,7 @@
 
 #import "APRLeaksProxy.h"
 #import <objc/runtime.h>
+#import "AppProtector.h"
 
 static NSMutableSet *leakedObjectPtrs;
 
@@ -49,7 +50,8 @@ static NSMutableSet *leakedObjectPtrs;
     objc_setAssociatedObject(object, kLeakedObjectProxyKey, proxy, OBJC_ASSOCIATION_RETAIN);
     [leakedObjectPtrs addObject:proxy.objectPtr];
 
-#warning add to error
+    NSString *detail = [NSString stringWithFormat:@"%@", proxy.viewStack];
+    [AppProtector.shared addErrorWithType:AppErrorTypeRetainCycle callStack:@[] detail:detail];
 }
 
 
@@ -59,7 +61,7 @@ static NSMutableSet *leakedObjectPtrs;
     NSArray *viewStack = _viewStack;
     dispatch_async(dispatch_get_main_queue(), ^{
         [leakedObjectPtrs removeObject:objectPtr];
-#warning  add to error
+
     });
 }
 

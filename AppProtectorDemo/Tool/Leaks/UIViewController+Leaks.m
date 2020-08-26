@@ -32,8 +32,10 @@ const void *const kVCHasBeenPopedKey = &kVCHasBeenPopedKey;
 - (void)apr_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     [self apr_dismissViewControllerAnimated:flag completion:completion];
 
+    // if presenting vc execute dismiss
     UIViewController *dismissedViewController = self.presentedViewController;
-#warning Why?
+
+    // if presented vc execute dismiss
     if (!dismissedViewController && self.presentingViewController) {
         // self is the presenting VC
         dismissedViewController = self;
@@ -51,7 +53,7 @@ const void *const kVCHasBeenPopedKey = &kVCHasBeenPopedKey;
     }
 
     [self willReleaseChildren:self.childViewControllers];
-    [self willReleaseChild:self.presentingViewController];
+    [self willReleaseChild:self.presentedViewController];
 
     if (self.isViewLoaded) {
         [self willReleaseChild:self.view];

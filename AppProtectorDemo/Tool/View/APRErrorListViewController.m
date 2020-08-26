@@ -35,6 +35,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -74,6 +79,7 @@
 
 - (void)onBtnBack {
     self.quitBlock();
+    // The presented vc dismiss self
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

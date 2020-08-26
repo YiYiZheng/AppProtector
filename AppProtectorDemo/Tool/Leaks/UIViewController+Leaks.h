@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (Leaks)
 
+- (void)apr_viewDidDisappear:(BOOL)animated;
+- (void)apr_viewWillAppear:(BOOL)animated;
+- (void)apr_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

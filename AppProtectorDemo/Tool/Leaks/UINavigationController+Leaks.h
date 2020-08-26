@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UINavigationController (Leaks)
 
+- (UIViewController *)apr_popViewControllerAnimated:(BOOL)animated;
+- (NSArray<UIViewController *> *)apr_popToViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (NSArray<UIViewController *> *)apr_popToRootViewControllerAnimated:(BOOL)animated;
+
 @end
 
 NS_ASSUME_NONNULL_END

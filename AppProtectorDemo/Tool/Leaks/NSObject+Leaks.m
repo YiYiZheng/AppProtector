@@ -14,6 +14,9 @@
 static const void *const kViewStackKey = &kViewStackKey;
 static const void *const kParentPtrsKey = &kParentPtrsKey;
 
+
+//const void *const kLatestSenderKey = &kLatestSenderKey;
+
 @implementation NSObject (Leaks)
 
 - (BOOL)willDealloc {
@@ -22,6 +25,10 @@ static const void *const kParentPtrsKey = &kParentPtrsKey;
     if ([[NSObject classNameWhitelist] containsObject:className]) {
         return NO;
     }
+
+//    NSNumber *senderPtr = objc_getAssociatedObject([UIApplication sharedApplication], kLatestSenderKey);
+//    if ([senderPtr isEqualToNumber:@((uintptr_t)self)])
+//        return NO;
 
     __weak id weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -40,15 +47,16 @@ static const void *const kParentPtrsKey = &kParentPtrsKey;
     }
 
     [APRLeaksProxy addLeakedObject:self];
-
-    NSString *className = NSStringFromClass([self class]);
-    NSLog(@"Possibly Memory Leak.\nIn case that %@ should not be dealloced, override -willDealloc in %@ by returning NO.\nView-ViewController stack: %@", className, className, [self viewStack]);
+//    NSString *className = NSStringFromClass([self class]);
+//    NSLog(@"Possibly Memory Leak.\nIn case that %@ should not be dealloced, override -willDealloc in %@ by returning NO.\nView-ViewController stack: %@", className, className, [self viewStack]);
 }
 
 #pragma mark - Release
 
 - (void)willReleaseChild:(id)child {
-    [self willReleaseChildren:@[child]];
+    if (child) {
+        [self willReleaseChildren:@[child]];
+    }
 }
 
 - (void)willReleaseChildren:(NSArray *)children {
