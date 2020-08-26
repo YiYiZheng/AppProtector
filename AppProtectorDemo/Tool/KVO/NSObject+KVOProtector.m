@@ -16,7 +16,7 @@
 
 /// 下面两个事用于说明当前对象曾经有过 kvo 观察
 static void *AppProtectorKey = &AppProtectorKey;
-static NSString *const AppProtectorValue = @"App_KVOProtector";
+static NSString *const AppProtectorValue = @"apr_KVOProtector";
 
 static void *appKVOProxyKey = &appKVOProxyKey;
 
@@ -35,19 +35,19 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     return appKVOProxy;
 }
 
-- (void)app_addObserver:(NSObject *)observer
+- (void)apr_addObserver:(NSObject *)observer
              forKeyPath:(NSString *)keyPath
                 options:(NSKeyValueObservingOptions)options
                 context:(void *)context {
     if (isSystemClass(self.class)) {
-        [self app_addObserver:observer forKeyPath:keyPath options:options context:context];
+        [self apr_addObserver:observer forKeyPath:keyPath options:options context:context];
     } else {
         // 只要曾经有过观察，就记录上，在 dealloc 时用
         objc_setAssociatedObject(self, AppProtectorKey, AppProtectorValue, OBJC_ASSOCIATION_RETAIN);
         BOOL success = [self.appKVOProxy addKVOInfoWithObserver:observer keyPath:keyPath options:options context:context];
 
         if (success) {
-            [self app_addObserver:self.appKVOProxy forKeyPath:keyPath options:options context:context];
+            [self apr_addObserver:self.appKVOProxy forKeyPath:keyPath options:options context:context];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"重复添加KVO 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
             [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -55,13 +55,13 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     }
 }
 
-- (void)app_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath {
+- (void)apr_removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath {
     if (isSystemClass(self.class)) {
-        [self app_removeObserver:observer forKeyPath:keyPath];
+        [self apr_removeObserver:observer forKeyPath:keyPath];
     } else {
 
         if ([self.appKVOProxy removeKVOInfoWithObserver:observer keyPath:keyPath]) {
-            [self app_removeObserver:observer forKeyPath:keyPath];
+            [self apr_removeObserver:observer forKeyPath:keyPath];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"该 KVO 信息已不存在，请勿重复移除 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
             [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -69,14 +69,14 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     }
 }
 
-- (void)app_removeObserver:(NSObject *)observer
+- (void)apr_removeObserver:(NSObject *)observer
                 forKeyPath:(NSString *)keyPath
                    context:(nullable void *)context {
     if (isSystemClass(self.class)) {
-        [self app_removeObserver:observer forKeyPath:keyPath context:context];
+        [self apr_removeObserver:observer forKeyPath:keyPath context:context];
     } else {
         if ([self.appKVOProxy removeKVOInfoWithObserver:observer keyPath:keyPath]) {
-            [self app_removeObserver:observer forKeyPath:keyPath context:context];
+            [self apr_removeObserver:observer forKeyPath:keyPath context:context];
         } else {
             NSString *errorInfo = [NSString stringWithFormat:@"该 KVO 信息已不存在，请勿重复移除 被观察者-%@ observer-%@ keyPath-%@", NSStringFromClass([self class]), NSStringFromClass([observer class]), keyPath];
             [AppProtector.shared addErrorWithType:AppErrorTypeKVO callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -84,7 +84,7 @@ static void *appKVOProxyKey = &appKVOProxyKey;
     }
 }
 
-- (void)app_dealloc {
+- (void)apr_dealloc {
     if (!isSystemClass(self.class)) {
         NSString *value = (NSString *)objc_getAssociatedObject(self, AppProtectorKey);
         // 说明当前类，曾添加过 KVO
@@ -98,13 +98,13 @@ static void *appKVOProxyKey = &appKVOProxyKey;
 
                 // 纠正，取消观察
                 [keyPaths enumerateObjectsUsingBlock:^(NSString *keyPath, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [self app_removeObserver:self.appKVOProxy forKeyPath:keyPath];
+                    [self apr_removeObserver:self.appKVOProxy forKeyPath:keyPath];
                 }];
             }
         }
     }
 
-    [self app_dealloc];
+    [self apr_dealloc];
 }
 
 @end

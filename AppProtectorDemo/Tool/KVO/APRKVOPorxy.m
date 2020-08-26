@@ -8,7 +8,7 @@
 
 #import "APRKVOPorxy.h"
 
-@interface AppKVOInfo : NSObject
+@interface APRKVOInfo : NSObject
 {
     // 不写 @package 就会是默认的 @protected
     @package
@@ -18,13 +18,9 @@
     NSString *_keyPath;
 }
 
-
 @end
 
-@implementation AppKVOInfo
-
-
-
+@implementation APRKVOInfo
 @end
 
 @interface APRKVOPorxy ()
@@ -35,7 +31,7 @@
  第一层 字典 key: keyPath value: 数组
  第二层 数组存放所有的 KVO 信息
  */
-@property (nonatomic, strong) NSMutableDictionary<NSString*, NSMutableArray<AppKVOInfo *> *> *keyPathMap;
+@property (nonatomic, strong) NSMutableDictionary<NSString*, NSMutableArray<APRKVOInfo *> *> *keyPathMap;
 @property (nonatomic, strong) NSLock *lock;
 
 @end
@@ -52,8 +48,6 @@
     return self;
 }
 
-
-
 - (BOOL)addKVOInfoWithObserver:(NSObject *)observer
                        keyPath:(NSString *)keyPath
                        options:(NSKeyValueObservingOptions)options
@@ -63,9 +57,9 @@
     [_lock lock];
 
     // 查看是否存在 同一个 observer 观察同一个 keyPath，如果有，就是重复观察
-    NSMutableArray <AppKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
+    NSMutableArray <APRKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
     __block BOOL isExist = NO;
-    [kvoInfos enumerateObjectsUsingBlock:^(AppKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [kvoInfos enumerateObjectsUsingBlock:^(APRKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj->_observer == observer) {
             isExist = YES;
         }
@@ -75,7 +69,7 @@
         success = NO;
     } else {
         // 不存在，则添加观察到数据中
-        AppKVOInfo *info = [[AppKVOInfo alloc] init];
+        APRKVOInfo *info = [[APRKVOInfo alloc] init];
         info->_observer = observer;
         info->_keyPath = keyPath;
         info->_options = options;
@@ -96,12 +90,12 @@
     [_lock lock];
 
     BOOL success = false;
-    NSMutableArray <AppKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
+    NSMutableArray <APRKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
 
     __block BOOL isExist = NO;
-    __block AppKVOInfo *kvoInfo;
+    __block APRKVOInfo *kvoInfo;
 
-    [kvoInfos enumerateObjectsUsingBlock:^(AppKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [kvoInfos enumerateObjectsUsingBlock:^(APRKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj->_observer == observer) {
             isExist = YES;
             kvoInfo = obj;
@@ -128,9 +122,9 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
 
-    NSMutableArray <AppKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
+    NSMutableArray <APRKVOInfo *> *kvoInfos = [self getKVOInfosForKeyPath:keyPath];
 
-    [kvoInfos enumerateObjectsUsingBlock:^(AppKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [kvoInfos enumerateObjectsUsingBlock:^(APRKVOInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         // 找到所有 keyPath 的观察者 并触发
         if (obj->_keyPath == keyPath) {
             [obj->_observer observeValueForKeyPath:keyPath ofObject:object change:change context:context];

@@ -20,11 +20,7 @@
 
 //    [AppProtector.shared closeAppProtection:AppProtectionAll];
     [AppProtector.shared openAppProtection:AppProtectionAll errorHandler:^(APRCatchError * _Nonnull error) {
-        NSLog(@"%@", error.errorName);
-        if (error.detail.length > 0) {
-            NSLog(@"detail: %@", error.detail);
-        }
-        NSLog(@"%@", error.errorCallStackSymbols);
+        NSLog(@"%@", error.fullDescription);
     }];
 
     [AppProtector.shared showErrorView];

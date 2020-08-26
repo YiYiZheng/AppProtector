@@ -13,9 +13,9 @@
 
 @implementation NSObject (unrecognizedSelector)
 
-- (id)app_swizzle_forwardingTargetForSelector:(SEL)selector {
+- (id)apr_swizzle_forwardingTargetForSelector:(SEL)selector {
     if ([self isOverrideForwardingMethods]) {
-        return [self app_swizzle_forwardingTargetForSelector:selector];
+        return [self apr_swizzle_forwardingTargetForSelector:selector];
     } else {
         // 补救
         class_addMethod([AppProtector class], selector, (IMP)DynamicAddMethodIMP, "v@:");

@@ -12,7 +12,7 @@
 #ifndef APRCommonTool_h
 #define APRCommonTool_h
 
-#define APP_SuppressPerformSelectorLeakWarning(Stuff)\
+#define apr_SuppressPerformSelectorLeakWarning(Stuff)\
 do { \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
@@ -25,7 +25,7 @@ typedef void(^APPErrorHandler)(APRCatchError * error);
 #pragma mark - C 方法
 
 /*交换实例方法*/
-static inline void app_exchangeInstanceMethod(Class _originalClass, SEL _originalSel, Class _targetClass, SEL _targetSel){
+static inline void apr_exchangeInstanceMethod(Class _originalClass, SEL _originalSel, Class _targetClass, SEL _targetSel){
     Method methodOriginal = class_getInstanceMethod(_originalClass, _originalSel);
     Method methodNew = class_getInstanceMethod(_targetClass, _targetSel);
     BOOL didAddMethod = class_addMethod(_originalClass, _originalSel, method_getImplementation(methodNew), method_getTypeEncoding(methodNew));
@@ -41,7 +41,7 @@ static inline int DynamicAddMethodIMP(id self,SEL _cmd,...){
 }
 
 /**交换类方法*/
-static inline void app_exchangeClassMethod(Class _cls, SEL _originalSel, SEL _exchangeSel) {
+static inline void apr_exchangeClassMethod(Class _cls, SEL _originalSel, SEL _exchangeSel) {
     Method originalMethod = class_getClassMethod(_cls, _originalSel);
     Method newMethod = class_getClassMethod(_cls, _exchangeSel);
     method_exchangeImplementations(originalMethod, newMethod);

@@ -20,7 +20,7 @@
 @implementation NSArray (AppProtector)
 
 /// 替换 arrayWithObjects 常见的是 @[] 写法
-+ (instancetype)app_arrayWithObjects:(id _Nonnull const [])objects count:(NSUInteger)count {
++ (instancetype)apr_arrayWithObjects:(id _Nonnull const [])objects count:(NSUInteger)count {
     NSUInteger index = 0;
     id _Nonnull objectsNew[count];
 
@@ -35,10 +35,10 @@
     }
 
     // 只返回有限数量
-    return [self app_arrayWithObjects:objects count:index];
+    return [self apr_arrayWithObjects:objects count:index];
 }
 
-- (id)app_NSArray0ObjectAtIndex:(NSUInteger)index {
+- (id)apr_NSArray0ObjectAtIndex:(NSUInteger)index {
     if (index >= self.count) {
         NSString *type = @"__NSArray0";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
@@ -47,11 +47,11 @@
 
         return nil;
     } else {
-        return [self app_NSArray0ObjectAtIndex:index];
+        return [self apr_NSArray0ObjectAtIndex:index];
     }
 }
 
-- (id)app_NSArrayIObjectAtIndex:(NSUInteger)index {
+- (id)apr_NSArrayIObjectAtIndex:(NSUInteger)index {
     if (index >= self.count) {
         NSString *type = @"__NSArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
@@ -60,11 +60,11 @@
 
         return nil;
     } else {
-        return [self app_NSArrayIObjectAtIndex:index];
+        return [self apr_NSArrayIObjectAtIndex:index];
     }
 }
 
-- (id)app_NSSingleObjectArrayIObjectAtIndex:(NSUInteger)index {
+- (id)apr_NSSingleObjectArrayIObjectAtIndex:(NSUInteger)index {
     if (index >= self.count) {
         NSString *type = @"NSSingleObjectArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ %@]: index %ld beyond bounds [0 .. %ld]", type, NSStringFromSelector(_cmd), index, (unsigned long)self.count];
@@ -73,11 +73,11 @@
 
         return nil;
     } else {
-        return [self app_NSSingleObjectArrayIObjectAtIndex:index];
+        return [self apr_NSSingleObjectArrayIObjectAtIndex:index];
     }
 }
 
-- (id)app_NSArrayIObjectAtIndexedSubscript:(NSUInteger)index {
+- (id)apr_NSArrayIObjectAtIndexedSubscript:(NSUInteger)index {
     if (index >= self.count) {
         NSString *type = @"__NSArrayI";
         NSString *errorInfo = [NSString stringWithFormat:@"-[%@ objectAtIndexedSubscript:]: index %ld beyond bounds [0 .. %ld]'", type, index, (unsigned long)self.count];
@@ -86,7 +86,7 @@
 
         return nil;
     } else {
-        return [self app_NSArrayIObjectAtIndexedSubscript:index];
+        return [self apr_NSArrayIObjectAtIndexedSubscript:index];
     }
 }
 
@@ -100,7 +100,7 @@
 
 @implementation NSMutableArray (AppProtector)
 
-- (id)app_MArrayObjectAtIndex:(NSUInteger)index {
+- (id)apr_MArrayObjectAtIndex:(NSUInteger)index {
     if (index >= self.count) {
         NSString *type = @"__NSArrayI";
 
@@ -109,42 +109,42 @@
 
         return nil;
     } else {
-        return [self app_MArrayObjectAtIndex:index];
+        return [self apr_MArrayObjectAtIndex:index];
     }
 }
 
-- (id)app_MArrayObjectAtIndexedSubscript:(NSUInteger)idx {
+- (id)apr_MArrayObjectAtIndexedSubscript:(NSUInteger)idx {
     if (idx >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM objectAtIndexedSubscript:]: index %ld beyond bounds [0 .. %ld]'",(unsigned long)idx,(unsigned long)self.count];
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
         return nil;
     } else {
-        return [self app_MArrayObjectAtIndexedSubscript:idx];
+        return [self apr_MArrayObjectAtIndexedSubscript:idx];
     }
 }
 
-- (void)app_MArrayRemoveObjectAtIndex:(NSUInteger)idx {
+- (void)apr_MArrayRemoveObjectAtIndex:(NSUInteger)idx {
     if (idx >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM removeObjectsAtIndex:]: range {%ld, 1} extends beyond bounds [0 .. %ld]",(unsigned long)index,(unsigned long)self.count];
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
     } else {
-        [self app_MArrayRemoveObjectAtIndex:idx];
+        [self apr_MArrayRemoveObjectAtIndex:idx];
     }
 }
 
-- (void)app_MArrayRemoveObjectsInRange:(NSRange)range {
+- (void)apr_MArrayRemoveObjectsInRange:(NSRange)range {
     if (range.location + range.length > self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM removeObjectsInRange:]: range {%ld, %ld} extends beyond bounds [0 .. %ld]",(unsigned long)range.location,(unsigned long)range.length,(unsigned long)self.count];
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
 
     } else {
-        [self app_MArrayRemoveObjectsInRange:range];
+        [self apr_MArrayRemoveObjectsInRange:range];
     }
 }
 
-- (void)app_MArrayInsertObject:(id)anObject atIndex:(NSUInteger)index {
+- (void)apr_MArrayInsertObject:(id)anObject atIndex:(NSUInteger)index {
     if (anObject == nil) {
         NSString *errorInfo = @"***  -[__NSArrayM insertObject:atIndex:]: object cannot be nil";
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -157,10 +157,10 @@
 
         return;
     }
-    [self app_MArrayInsertObject:anObject atIndex:index];
+    [self apr_MArrayInsertObject:anObject atIndex:index];
 }
 
-- (void)app_MArrayInsertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes{
+- (void)apr_MArrayInsertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes{
     if (indexes.firstIndex > self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[NSMutableArray insertObjects:atIndexes:]: index %ld in index set beyond bounds [0 .. %ld]",(unsigned long)indexes.firstIndex,(unsigned long)self.count];
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -171,10 +171,10 @@
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
         return;
     }
-    [self app_MArrayInsertObjects:objects atIndexes:indexes];
+    [self apr_MArrayInsertObjects:objects atIndexes:indexes];
 }
 
-- (void)app_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject{
+- (void)apr_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject{
     if (anObject == nil) {
         NSString *errorInfo = @"***  -[__NSArrayM replaceObjectAtIndex:withObject:]: object cannot be nil";
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
@@ -187,15 +187,15 @@
 
         return;
     }
-    [self app_replaceObjectAtIndex:index withObject:anObject];
+    [self apr_replaceObjectAtIndex:index withObject:anObject];
 }
 
-- (void)app_replaceObjectsAtIndexes:(NSIndexSet *)indexes withObjects:(NSArray *)objects{
+- (void)apr_replaceObjectsAtIndexes:(NSIndexSet *)indexes withObjects:(NSArray *)objects{
     if (indexes.lastIndex >= self.count||indexes.firstIndex >= self.count) {
         NSString *errorInfo = [NSString stringWithFormat:@"*** -[__NSArrayM replaceObjectsInRange:withObjects:count:]: range {%ld, %ld} extends beyond bounds [0 .. %ld]",(unsigned long)indexes.firstIndex,(unsigned long)indexes.count,(unsigned long)self.count];
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
-        [self app_replaceObjectsAtIndexes:indexes withObjects:objects];
+        [self apr_replaceObjectsAtIndexes:indexes withObjects:objects];
     }
 }
 
@@ -209,7 +209,7 @@
 
 @implementation NSDictionary (AppProtector)
 
-- (instancetype)app_initWithObjects:(id  _Nonnull const [])objects
+- (instancetype)apr_initWithObjects:(id  _Nonnull const [])objects
                             forKeys:(id<NSCopying>  _Nonnull const [])keys
                               count:(NSUInteger)cnt {
     NSUInteger index = 0;
@@ -229,7 +229,7 @@
         }
     }
 
-    return [self app_initWithObjects:newObjects forKeys:newKeys count:index];
+    return [self apr_initWithObjects:newObjects forKeys:newKeys count:index];
 }
 
 @end
@@ -242,21 +242,21 @@
 
 @implementation NSMutableDictionary (AppProtector)
 
-- (void)app_dictionaryMSetObject:(id)anObject forKey:(id<NSCopying>)aKey {
+- (void)apr_dictionaryMSetObject:(id)anObject forKey:(id<NSCopying>)aKey {
     if (anObject == nil || aKey == nil) {
         NSString * errorInfo = @"*** setObjectForKey: object or key cannot be nil";
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
-        [self app_dictionaryMSetObject:anObject forKey:aKey];
+        [self apr_dictionaryMSetObject:anObject forKey:aKey];
     }
 }
 
-- (void)app_dictionaryMRemoveObjectForKey:(id)aKey {
+- (void)apr_dictionaryMRemoveObjectForKey:(id)aKey {
     if (aKey == nil) {
         NSString * errorInfo = @"*** -[__NSDictionaryM removeObjectForKey:]: key cannot be nil";
         [AppProtector.shared addErrorWithType:AppErrorTypeContainers callStack:[NSThread callStackSymbols] detail:errorInfo];
     } else {
-        [self app_dictionaryMRemoveObjectForKey:aKey];
+        [self apr_dictionaryMRemoveObjectForKey:aKey];
     }
 }
 
@@ -291,7 +291,7 @@
       1、  NSArray *array = @[@"12", @"234", @"456", nilValue];
         注意使用的是类方法
      */
-    app_exchangeClassMethod(__NSArray, @selector(arrayWithObjects:count:), @selector(app_arrayWithObjects:count:));
+    apr_exchangeClassMethod(__NSArray, @selector(arrayWithObjects:count:), @selector(apr_arrayWithObjects:count:));
 
     /**
 
@@ -301,7 +301,7 @@
     NSArray *array2 = @[@"1",@"2",@"3"];
     id obj = array2[4];
      */
-    app_exchangeInstanceMethod(__NSArrayI, @selector(objectAtIndexedSubscript:), __NSArrayI, @selector(app_NSArrayIObjectAtIndexedSubscript:));
+    apr_exchangeInstanceMethod(__NSArrayI, @selector(objectAtIndexedSubscript:), __NSArrayI, @selector(apr_NSArrayIObjectAtIndexedSubscript:));
 
     /**
         3-1 objectAtIndex:
@@ -310,7 +310,7 @@
         NSArray *array2 = @[@"1",@"2",@"3"];
         id objectAtIndex = [array2 objectAtIndex:4];
      */
-    app_exchangeInstanceMethod(__NSArrayI, @selector(objectAtIndex:), __NSArrayI, @selector(app_NSArrayIObjectAtIndex:));
+    apr_exchangeInstanceMethod(__NSArrayI, @selector(objectAtIndex:), __NSArrayI, @selector(apr_NSArrayIObjectAtIndex:));
 
 
 
@@ -322,7 +322,7 @@
         适用于只有一个元素的
         objectAtIndex 和取下标方法，都会走这个流程
     */
-    app_exchangeInstanceMethod(__NSSingleObjectArrayI, @selector(objectAtIndex:), __NSArrayI, @selector(app_NSSingleObjectArrayIObjectAtIndex:));
+    apr_exchangeInstanceMethod(__NSSingleObjectArrayI, @selector(objectAtIndex:), __NSArrayI, @selector(apr_NSSingleObjectArrayIObjectAtIndex:));
 
     /*
      3-3
@@ -332,36 +332,36 @@
 
      objectAtIndex 和取下标方法，都会走这个流程
      */
-    app_exchangeInstanceMethod(__NSArray0, @selector(objectAtIndex:), __NSArrayI, @selector(app_NSArray0ObjectAtIndex:));
+    apr_exchangeInstanceMethod(__NSArray0, @selector(objectAtIndex:), __NSArrayI, @selector(apr_NSArray0ObjectAtIndex:));
 }
 
 + (void)exchangeAllNSMutableArrayMethods {
     Class cls = NSClassFromString(@"__NSArrayM");
 
     // get
-    app_exchangeInstanceMethod(cls, @selector(objectAtIndex:), cls, @selector(app_MArrayObjectAtIndex:));
+    apr_exchangeInstanceMethod(cls, @selector(objectAtIndex:), cls, @selector(apr_MArrayObjectAtIndex:));
 
-    app_exchangeInstanceMethod(cls, @selector(objectAtIndexedSubscript:), cls, @selector(app_MArrayObjectAtIndexedSubscript:));
+    apr_exchangeInstanceMethod(cls, @selector(objectAtIndexedSubscript:), cls, @selector(apr_MArrayObjectAtIndexedSubscript:));
 
     // remove
-    app_exchangeInstanceMethod(cls, @selector(removeObjectAtIndex:), cls, @selector(app_MArrayRemoveObjectAtIndex:));
-    app_exchangeInstanceMethod(cls, @selector(removeObjectsInRange:), cls, @selector(app_MArrayRemoveObjectsInRange:));
+    apr_exchangeInstanceMethod(cls, @selector(removeObjectAtIndex:), cls, @selector(apr_MArrayRemoveObjectAtIndex:));
+    apr_exchangeInstanceMethod(cls, @selector(removeObjectsInRange:), cls, @selector(apr_MArrayRemoveObjectsInRange:));
 
     // insert
 
     // addObject 同样适用
-    app_exchangeInstanceMethod(cls, @selector(insertObject:atIndex:), cls, @selector(app_MArrayInsertObject:atIndex:));
-    app_exchangeInstanceMethod(cls, @selector(insertObjects:atIndexes:), cls, @selector(app_MArrayInsertObjects:atIndexes:));
+    apr_exchangeInstanceMethod(cls, @selector(insertObject:atIndex:), cls, @selector(apr_MArrayInsertObject:atIndex:));
+    apr_exchangeInstanceMethod(cls, @selector(insertObjects:atIndexes:), cls, @selector(apr_MArrayInsertObjects:atIndexes:));
 
     // replace
-    app_exchangeInstanceMethod(cls, @selector(replaceObjectAtIndex:withObject:), cls, @selector(app_replaceObjectAtIndex:withObject:));
-    app_exchangeInstanceMethod(cls, @selector(replaceObjectsAtIndexes:withObjects:), cls, @selector(app_replaceObjectsAtIndexes:withObjects:));
+    apr_exchangeInstanceMethod(cls, @selector(replaceObjectAtIndex:withObject:), cls, @selector(apr_replaceObjectAtIndex:withObject:));
+    apr_exchangeInstanceMethod(cls, @selector(replaceObjectsAtIndexes:withObjects:), cls, @selector(apr_replaceObjectsAtIndexes:withObjects:));
 
 }
 
 + (void)exchangeAllNSDictionaryMethods {
 //    Class dicClass = NSClassFromString(@"NSDictionary");
-//    app_exchangeClassMethod(dicClass, @selector(dictionaryWithObjects:forKeys:count:), @selector(app_dictionaryWithObjects:forKeys:count:));
+//    apr_exchangeClassMethod(dicClass, @selector(dictionaryWithObjects:forKeys:count:), @selector(apr_dictionaryWithObjects:forKeys:count:));
 
     /**
 
@@ -370,14 +370,14 @@
      */
 
     Class placeholderClass = NSClassFromString(@"__NSPlaceholderDictionary");
-    app_exchangeInstanceMethod(placeholderClass, @selector(initWithObjects:forKeys:count:), placeholderClass, @selector(app_initWithObjects:forKeys:count:));
+    apr_exchangeInstanceMethod(placeholderClass, @selector(initWithObjects:forKeys:count:), placeholderClass, @selector(apr_initWithObjects:forKeys:count:));
 }
 
 + (void)exchangeAllNSMutableDictionaryMethods {
     Class cls = NSClassFromString(@"__NSDictionaryM");
 
-    app_exchangeInstanceMethod(cls, @selector(setObject:forKey:), cls, @selector(app_dictionaryMSetObject:forKey:));
-    app_exchangeInstanceMethod(cls, @selector(removeObjectForKey:), cls, @selector(app_dictionaryMRemoveObjectForKey:));
+    apr_exchangeInstanceMethod(cls, @selector(setObject:forKey:), cls, @selector(apr_dictionaryMSetObject:forKey:));
+    apr_exchangeInstanceMethod(cls, @selector(removeObjectForKey:), cls, @selector(apr_dictionaryMRemoveObjectForKey:));
 }
 
 

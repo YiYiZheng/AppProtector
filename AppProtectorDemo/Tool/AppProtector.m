@@ -162,32 +162,32 @@
 #pragma mark - Exchange method
 
 - (void)exchangeMethodForUnrecognizedSelector {
-    app_exchangeInstanceMethod([NSObject class], @selector(forwardingTargetForSelector:), [NSObject class], @selector(app_swizzle_forwardingTargetForSelector:));
+    apr_exchangeInstanceMethod([NSObject class], @selector(forwardingTargetForSelector:), [NSObject class], @selector(apr_swizzle_forwardingTargetForSelector:));
 }
 
 - (void)exchangeMethodForKVO {
     Class cls = [NSObject class];
-    app_exchangeInstanceMethod(cls, @selector(addObserver:forKeyPath:options:context:),
-                               cls, @selector(app_addObserver:forKeyPath:options:context:));
+    apr_exchangeInstanceMethod(cls, @selector(addObserver:forKeyPath:options:context:),
+                               cls, @selector(apr_addObserver:forKeyPath:options:context:));
 
-    app_exchangeInstanceMethod(cls, @selector(removeObserver:forKeyPath:),
-    cls, @selector(app_removeObserver:forKeyPath:));
-    app_exchangeInstanceMethod(cls, @selector(removeObserver:forKeyPath:context:),
-    cls, @selector(app_removeObserver:forKeyPath:context:));
+    apr_exchangeInstanceMethod(cls, @selector(removeObserver:forKeyPath:),
+    cls, @selector(apr_removeObserver:forKeyPath:));
+    apr_exchangeInstanceMethod(cls, @selector(removeObserver:forKeyPath:context:),
+    cls, @selector(apr_removeObserver:forKeyPath:context:));
     // ARC forbids use of 'dealloc' in a @selector
-    app_exchangeInstanceMethod(cls, NSSelectorFromString(@"dealloc"),
-    cls, @selector(app_dealloc));
+    apr_exchangeInstanceMethod(cls, NSSelectorFromString(@"dealloc"),
+    cls, @selector(apr_dealloc));
 }
 
 - (void)exchangeMethodForTimer {
     // timer
     Class cls = [NSTimer class];
     // 注意 这里交换的是类方法
-    app_exchangeClassMethod(cls, @selector(timerWithTimeInterval:target:selector:userInfo:repeats:),
-                            @selector(app_timerWithTimeInterval:target:selector:userInfo:repeats:));
+    apr_exchangeClassMethod(cls, @selector(timerWithTimeInterval:target:selector:userInfo:repeats:),
+                            @selector(apr_timerWithTimeInterval:target:selector:userInfo:repeats:));
 
-    app_exchangeClassMethod(cls, @selector(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:),
-                            @selector(app_scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:));
+    apr_exchangeClassMethod(cls, @selector(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:),
+                            @selector(apr_scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:));
 }
 
 - (void)exchangeMethodForContainers {
@@ -196,15 +196,15 @@
 
 - (void)exchangeMethodForRetainCycle {
     Class vcClass = [UIViewController class];
-    app_exchangeInstanceMethod(vcClass, @selector(viewDidDisappear:), vcClass, @selector(apr_viewDidDisappear:));
-    app_exchangeInstanceMethod(vcClass, @selector(viewWillAppear:), vcClass, @selector(apr_viewWillAppear:));
-    app_exchangeInstanceMethod(vcClass, @selector(dismissViewControllerAnimated:completion:), vcClass, @selector(apr_dismissViewControllerAnimated:completion:));
+    apr_exchangeInstanceMethod(vcClass, @selector(viewDidDisappear:), vcClass, @selector(apr_viewDidDisappear:));
+    apr_exchangeInstanceMethod(vcClass, @selector(viewWillAppear:), vcClass, @selector(apr_viewWillAppear:));
+    apr_exchangeInstanceMethod(vcClass, @selector(dismissViewControllerAnimated:completion:), vcClass, @selector(apr_dismissViewControllerAnimated:completion:));
 
 
     Class navClass = [UINavigationController class];
-    app_exchangeInstanceMethod(navClass, @selector(popViewControllerAnimated:), navClass, @selector(apr_popViewControllerAnimated:));
-    app_exchangeInstanceMethod(navClass, @selector(popToViewController:animated:), navClass, @selector(apr_popToViewController:animated:));
-    app_exchangeInstanceMethod(navClass, @selector(popToRootViewControllerAnimated:), navClass, @selector(apr_popToRootViewControllerAnimated:));
+    apr_exchangeInstanceMethod(navClass, @selector(popViewControllerAnimated:), navClass, @selector(apr_popViewControllerAnimated:));
+    apr_exchangeInstanceMethod(navClass, @selector(popToViewController:animated:), navClass, @selector(apr_popToViewController:animated:));
+    apr_exchangeInstanceMethod(navClass, @selector(popToRootViewControllerAnimated:), navClass, @selector(apr_popToRootViewControllerAnimated:));
 }
 
 #pragma mark - Lazy load

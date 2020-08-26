@@ -12,13 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (TimerProtector)
 
-+ (NSTimer *)app_scheduledTimerWithTimeInterval:(NSTimeInterval)ti
++ (NSTimer *)apr_scheduledTimerWithTimeInterval:(NSTimeInterval)ti
                                          target:(id)aTarget
                                        selector:(SEL)aSelector
                                        userInfo:(id)userInfo
                                         repeats:(BOOL)yesOrNo;
 
-+ (NSTimer *)app_timerWithTimeInterval:(NSTimeInterval)ti
++ (NSTimer *)apr_timerWithTimeInterval:(NSTimeInterval)ti
                                 target:(id)aTarget
                               selector:(SEL)aSelector
                               userInfo:(id)userInfo

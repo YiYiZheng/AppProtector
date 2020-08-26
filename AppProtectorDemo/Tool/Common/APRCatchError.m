@@ -32,22 +32,22 @@
 }
 
 - (NSString *)errorName {
-    NSString *name = @"捕获到的错误";
+    NSString *name = @"Unknow Error";
     switch (self.errorType) {
         case AppErrorTypeUnrecognizedSelector:
-            name = @"Unrecognized Selector 错误";
+            name = @"Unrecognized Selector Error";
             break;
         case AppErrorTypeKVO:
-            name = @"KVO 错误";
+            name = @"KVO Error";
             break;
         case AppErrorTypeTimer:
-            name = @"Timer 错误 未被释放";
+            name = @"Timer Error: Target not released";
             break;
         case AppErrorTypeContainers:
-            name = @"Containers 错误";
+            name = @"Containers Error";
             break;
         case AppErrorTypeRetainCycle:
-            name = @"循环引用";
+            name = @"Retain Cycle Error";
             break;
     }
 
@@ -55,7 +55,7 @@
 }
 
 - (NSString *)fullDescription {
-    NSString *str = [NSString stringWithFormat:@"%@ \n详情 %@ \n\nCall stack %@", self.errorName, self.detail, self.errorCallStackSymbols];
+    NSString *str = [NSString stringWithFormat:@"Type: %@ \nDetail %@ \nCall stack %@", self.errorName, self.detail, self.errorCallStackSymbols];
     return str;
 }
 
