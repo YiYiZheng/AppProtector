@@ -18,11 +18,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    [self testArray];
+//    [self cluster];
+    [self testArray];
 //    [self testMutableArray];
 //    [self testDic];
-    [self testMutableDic];
+//    [self testMutableDic];
 
+}
+
+- (void)cluster {
+    /**
+        1、__NSPlaceholderArray：仅仅是 alloc
+        2、__NSArray0：空数组
+        3、__NSSingleObjectArrayI：有且仅有一个元素
+        4、__NSArrayI：大于一个元素
+
+     */
+    NSLog(@"[NSArray alloc] 类型 %s", object_getClassName([NSArray alloc]));
+    NSLog(@"[[NSArray alloc] init] 类型 %s", object_getClassName([[NSArray alloc] init]));
+    NSLog(@"[@1] %s", object_getClassName(@[@1]));
+    NSLog(@"@[@1, @2] %s", object_getClassName(@[@1, @2]));
 }
 
 - (void)testArray {
@@ -30,11 +45,11 @@
 //    NSString *nilValue;
 //    NSArray *array1 = @[@"12", @"234", @"456", nilValue];
 
-    // 2 objectAtIndexedSubscript
+    // 2 objectAtIndexedSubscript 越界
 //    NSArray *array3 = @[@"12", @"123"];
 //    NSString *item = array3[2];
 
-    // 3 以下三种都是 objectAtIndex
+    // 3 以下三种都是 objectAtIndex 越界
 
     // __NSArray0
     NSArray *array4 = @[];

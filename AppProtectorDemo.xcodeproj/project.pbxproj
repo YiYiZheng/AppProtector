@@ -181,11 +181,11 @@
 		533CB44324D2AFD400408594 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				53E9437224F6373C00CC2698 /* Container */,
-				53E9437124F6371300CC2698 /* KVO */,
-				53E9437024F6370400CC2698 /* Timer */,
 				53E9436F24F636ED00CC2698 /* UnrecognizedSelector */,
+				53E9437024F6370400CC2698 /* Timer */,
+				53E9437224F6373C00CC2698 /* Container */,
 				53F5A5E824F50951001F953B /* Leaks */,
+				53E9437124F6371300CC2698 /* KVO */,
 				5337E0BA24EE1A89005126E2 /* DebugView */,
 				532A492324F0F61A00B3E7F9 /* Common */,
 				533CB44424D2B09400408594 /* AppProtector.h */,
@@ -194,13 +194,13 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
-		534F6DAA24EA625000E0F901 /* RetainCycle */ = {
+		534F6DAA24EA625000E0F901 /* Leaks */ = {
 			isa = PBXGroup;
 			children = (
 				533869A624F5439D0004740E /* RetainCycleViewController.h */,
 				533869A724F5439D0004740E /* RetainCycleViewController.m */,
 			);
-			path = RetainCycle;
+			path = Leaks;
 			sourceTree = "<group>";
 		};
 		53B54B7724E4E7BE002CF971 /* Timer */ = {
@@ -224,11 +224,11 @@
 		53CB8E7624DD3F7E005F3FD4 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				534F6DAA24EA625000E0F901 /* RetainCycle */,
-				53B54B7E24E51C8F002CF971 /* Container */,
-				53B54B7724E4E7BE002CF971 /* Timer */,
-				53CB8E8E24E2D729005F3FD4 /* KVO */,
 				53CB8E7724DD495F005F3FD4 /* UnrecognizedSelector */,
+				53B54B7724E4E7BE002CF971 /* Timer */,
+				53B54B7E24E51C8F002CF971 /* Container */,
+				534F6DAA24EA625000E0F901 /* Leaks */,
+				53CB8E8E24E2D729005F3FD4 /* KVO */,
 			);
 			path = Example;
 			sourceTree = "<group>";

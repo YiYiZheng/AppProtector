@@ -59,7 +59,7 @@ static NSMutableSet *leakedObjectPtrs;
 /// Useless?
 - (void)dealloc {
     NSNumber *objectPtr = _objectPtr;
-    NSArray *viewStack = _viewStack;
+//    NSArray *viewStack = _viewStack;
     dispatch_async(dispatch_get_main_queue(), ^{
         [leakedObjectPtrs removeObject:objectPtr];
 
