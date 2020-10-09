@@ -8,4 +8,5 @@
 2. KVO
 3. Timer
 4. Array/Dictionary
+5. UIViewController 及 UIView 的内存泄露检测
 
