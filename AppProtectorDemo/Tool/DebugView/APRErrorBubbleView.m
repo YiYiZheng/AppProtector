@@ -36,17 +36,32 @@
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)sender {
-#warning figure out pan 
+    /**
+     1. 获取手势在 superview 的偏移坐标 point
+     2. 手势启动阶段，将 subview 的坐标根据 point 进行校正（与此同时，将 手势在 superview 上的偏移坐标清掉）
+     3. 手势结束阶段，查看四个方向是否保持了 12 个点的 padding，没有的话，则需要有 12 个点的 padding 偏移动画，恢复到该状态
+
+     */
+
     CGPoint point = [sender translationInView:[sender.view superview]];
 
     CGFloat senderHalfViewWidth = sender.view.frame.size.width / 2;
     CGFloat senderHalfViewHeight = sender.view.frame.size.height / 2;
 
     __block CGPoint viewCenter = CGPointMake(sender.view.center.x + point.x, sender.view.center.y + point.y);
-    // 拖拽状态结束
+
     if (sender.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.4 animations:^{
             if ((sender.view.center.x + point.x - senderHalfViewWidth) <= 12) {
+                // 当 view 距离左边距小于 12 时，就会触发这个动画
+
+                // sender.view.center.x + point.x <= 12 + senderHalfViewWidth 中
+                // 如果刚刚好靠边的话，则 sender.view.center.x ==  senderHalfViewWidth
+//                NSLog(@"sender.view.center.x: %f", sender.view.center.x);
+//                NSLog(@"point.x: %f", point.x);
+//                NSLog(@"senderHalfViewWidth: %f", senderHalfViewWidth);
+
+                // 恢复为 12 的 padding
                 viewCenter.x = senderHalfViewWidth + 12;
             }
             if ((sender.view.center.x + point.x + senderHalfViewWidth) >= (AppScreenWidth - 12)) {
@@ -65,9 +80,12 @@
         [sender setTranslation:CGPointMake(0, 0) inView:[sender.view superview]];
     } else {
         // UIGestureRecognizerStateBegan || UIGestureRecognizerStateChanged
-        viewCenter.x = sender.view.center.x + point.x;
-        viewCenter.y = sender.view.center.y + point.y;
+
+        // 以此来改变 view 的坐标
+//        viewCenter.x = sender.view.center.x + point.x;
+//        viewCenter.y = sender.view.center.y + point.y;
         sender.view.center = viewCenter;
+        // 手势在 superview 上的偏移值重置为 0，因为 view 已经对应做了改变了
         [sender setTranslation:CGPointMake(0, 0) inView:[sender.view superview]];
     }
 
